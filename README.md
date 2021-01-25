@@ -61,4 +61,6 @@ Modern browsers and Internet Explorer 10+.
 
 ## LICENSE
 
+test
+
 [MIT](http://opensource.org/licenses/MIT)
