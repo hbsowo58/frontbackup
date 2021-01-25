@@ -133,15 +133,9 @@ export default {
       if (this.title.length === 0) {
         this.$error("제목을 입력해주세요");
         return;
-<<<<<<< HEAD
-      } else if (this.title.length >= 40) {
-        console.log(this.title.length);
-        this.$error("제목은 20자 이내로 입력해주세요");
-=======
       } else if (this.title.length >= 100) {
         // console.log(this.title.length);
         this.$error("제목은 100자 이내로 입력해주세요");
->>>>>>> 4aa031b6dbd238ba32f5f313f6057667afd681bb
         return;
       } else if (this.content.length === 0) {
         this.$error("내용을 입력해주세요");
