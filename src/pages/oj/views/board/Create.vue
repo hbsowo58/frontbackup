@@ -97,12 +97,51 @@ export default {
       }
     },
     update() {
+      if (
+        this.title.length > 0 &&
+        this.title.length < 100 &&
+        this.content.length > 0 &&
+        this.content.length < 1000000
+      ) {
+        this.$Modal.confirm({
+          content: "게시글 수정을 하시겠습니까?",
+          onOk: async () => {
+            if (
+              this.isSuperAdmin ||
+              this.board.board.created_by === this.user.profile.user.id
+            ) {
+              if (
+                this.title.length > 0 &&
+                this.title.length < 100 &&
+                this.content.length > 0 &&
+                this.content.length < 1000000
+              ) {
+                const test = await api.putBoard(
+                  this.title,
+                  this.content,
+                  this.$route.params["board_id"]
+                );
+                this.$router.push({
+                  path: `/board/${this.$route.params["board_id"]}`
+                });
+              }
+            }
+          },
+          onCancel: () => {}
+        });
+      }
       if (this.title.length === 0) {
         this.$error("제목을 입력해주세요");
         return;
+<<<<<<< HEAD
       } else if (this.title.length >= 40) {
         console.log(this.title.length);
         this.$error("제목은 20자 이내로 입력해주세요");
+=======
+      } else if (this.title.length >= 100) {
+        // console.log(this.title.length);
+        this.$error("제목은 100자 이내로 입력해주세요");
+>>>>>>> 4aa031b6dbd238ba32f5f313f6057667afd681bb
         return;
       } else if (this.content.length === 0) {
         this.$error("내용을 입력해주세요");
@@ -111,33 +150,6 @@ export default {
         this.$error("내용은 1메가 이상 업로드 할 수 없습니다.");
         return;
       }
-      // 수정 방지 처리
-      this.$Modal.confirm({
-        content: "게시글 수정을 하시겠습니까?",
-        onOk: async () => {
-          if (
-            this.isSuperAdmin ||
-            this.board.board.created_by === this.user.profile.user.id
-          ) {
-            if (
-              this.title.length > 0 &&
-              this.title.length < 20 &&
-              this.content.length > 0 &&
-              this.content.length < 1000000
-            ) {
-              const test = await api.putBoard(
-                this.title,
-                this.content,
-                this.$route.params["board_id"]
-              );
-              this.$router.push({
-                path: `/board/${this.$route.params["board_id"]}`
-              });
-            }
-          }
-        },
-        onCancel: () => {}
-      });
     }
   }
 };
