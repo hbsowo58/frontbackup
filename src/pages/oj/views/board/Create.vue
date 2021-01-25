@@ -100,7 +100,7 @@ export default {
       if (this.title.length === 0) {
         this.$error("제목을 입력해주세요");
         return;
-      } else if (this.title.length >= 20) {
+      } else if (this.title.length >= 40) {
         // console.log(this.title.length);
         this.$error("제목은 20자 이내로 입력해주세요");
         return;

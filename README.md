@@ -59,6 +59,6 @@ npm run dev
 
 Modern browsers and Internet Explorer 10+.
 
-## LICENSE
+## LICENS
 
 [MIT](http://opensource.org/licenses/MIT)
