@@ -1,6 +1,12 @@
 <template>
   <div class="comment">
-    <el-input placeholder="댓글을 입력해주세요" v-model="input"></el-input>
+    <el-input
+      type="textarea"
+      :rows="3"
+      autosize
+      placeholder="댓글을 입력해주세요"
+      v-model="input"
+    ></el-input>
     <el-button @click="postComment">입력</el-button>
   </div>
 </template>
@@ -34,9 +40,10 @@ export default {
         this.$error("댓글을 입력해주세요");
         return;
       }
-      // console.log(this.profile);
+      let str = this.input.replace(/ /g, "\u00a0");
+      str = str.replace(/(?:\r\n|\r|\n)/g, "<br/>");
       const parameter = this.$route.params["board_id"];
-      await api.postComment(this.input, parameter, this.user.profile.user.id);
+      await api.postComment(str, parameter, this.user.profile.user.id);
       this.getBoard(this.$route.params["board_id"]);
       this.input = "";
     }
@@ -61,6 +68,9 @@ export default {
     position: absolute;
     right: 0;
     bottom: 0;
+  }
+  .el-textarea__inner{
+    min-height: 300px !important;
   }
 }
 </style>

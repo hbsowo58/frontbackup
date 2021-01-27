@@ -121,7 +121,7 @@ export default {
         span: ["color"]
       }
     });
-    console.log(this.editor);
+    // console.log(this.editor);
     this.editor.on("valuechanged", (e, src) => {
       this.currentValue = this.editor.getValue();
     });

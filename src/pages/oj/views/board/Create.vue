@@ -3,9 +3,10 @@
     <el-header>
       <div class="detail_title">게시글 작성</div>
       <el-input v-model="title" placeholder="제목을 입력해주세요" />
+      <el-checkbox v-model="checked" class="secret-checkbox">비밀글로 작성하기</el-checkbox>
     </el-header>
     <el-main>
-      <Simditor v-model="content" placeholder=""></Simditor>
+      <Simditor  v-model="content" placeholder=""></Simditor>
 
       <div style="margin-top:50px;"></div>
       <el-button v-if="index" @click="update">수정</el-button>
@@ -34,7 +35,8 @@ export default {
       index: "",
       title: "",
       content: "",
-      route: ""
+      route: "",
+      checked:""
     };
   },
   computed: {
@@ -76,7 +78,8 @@ export default {
         await api.postBoard(
           this.title,
           this.content,
-          this.user.profile.user.id
+          this.user.profile.user.id,
+          this.checked ? "secret" : ""
         );
         this.$router.push({
           path: "/board"
@@ -110,12 +113,12 @@ export default {
               this.isSuperAdmin ||
               this.board.board.created_by === this.user.profile.user.id
             ) {
-              if (
-                this.title.length > 0 &&
-                this.title.length < 100 &&
-                this.content.length > 0 &&
-                this.content.length < 1000000
-              ) {
+              // if (
+              //   this.title.length > 0 &&
+              //   this.title.length < 100 &&
+              //   this.content.length > 0 &&
+              //   this.content.length < 1000000
+              // ) {
                 const test = await api.putBoard(
                   this.title,
                   this.content,
@@ -124,7 +127,7 @@ export default {
                 this.$router.push({
                   path: `/board/${this.$route.params["board_id"]}`
                 });
-              }
+              // }
             }
           },
           onCancel: () => {}
@@ -149,10 +152,10 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .el-header {
   background: white;
-  padding: 40px 40px;
+  padding: 20px 40px;
   height: 100% !important;
 }
 .el-input input {
@@ -166,12 +169,17 @@ export default {
 
 .el-textarea__inner {
   margin-bottom: 20px;
-  min-height: 50vh !important;
+  // min-height: 50vh !important;
   // background: red;
 }
 .detail_title {
   font-size: 21px;
   font-weight: 500;
   margin-bottom: 10px;
+}
+.secret-checkbox{
+  display: block;
+  text-align: right;
+  margin-top:10px;
 }
 </style>

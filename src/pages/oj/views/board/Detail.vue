@@ -145,9 +145,9 @@
               🔒</span
             > -->
 
-            <div v-if="c.flag === 3 && (isSuperAdmin ||c.created_by ===user.profile.user.id )">{{ c.comment }} 🔒</div>
+            <div v-if="c.flag === 3 && (isSuperAdmin ||c.created_by ===user.profile.user.id )" v-html="c.comment">🔒</div>
             <div v-else-if="c.flag ===3">비공개 댓글입니다. 🔒</div>
-            <div v-else>{{ c.comment }}</div>
+            <div v-else v-html="c.comment"></div>
           </div>
         </div>
         <Comment />

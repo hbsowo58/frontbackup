@@ -287,13 +287,14 @@ export default {
       }
     })
   },
-  postBoard(title, content, created_by_id){
+  postBoard(title, content, created_by_id, type){
 
     return ajax('board', 'post',{
       data:{
         title,
         content,
-        created_by_id
+        created_by_id,
+        type
       }
     })
   },
