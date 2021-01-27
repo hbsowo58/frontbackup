@@ -123,30 +123,44 @@
             </div>
             <div v-if="flag && commentIndex === c.id">
               <el-input
+                type="textarea"
+                :rows="3"
+                autosize
+                placeholder="댓글을 입력해주세요"
                 v-model="comment"
-                placeholder="수정할 값을 입력하세요"
               ></el-input>
+
               <el-button
                 class="detail_comment_button"
                 @click="changeComment(c.id);"
                 >변경</el-button
               >
             </div>
-            <!-- <span
-              style="padding-left:30px;"
-              v-if="scope.row.flag == 3 && (isSuperAdmin || scope.row.created_by == user.profile.user.id)"
-              >{{ scope.row.title }}
+            <!--
               <span
-                v-if="
-                  scope.row.board.length && getCommentCount(scope.row.board)
-                "
-                >[{{ getCommentCount(scope.row.board) }}]</span
+                style="padding-left:30px;"
+                v-if="scope.row.flag == 3 && (isSuperAdmin || scope.row.created_by == user.profile.user.id)"
+                >{{ scope.row.title }}
+                <span
+                  v-if="
+                    scope.row.board.length && getCommentCount(scope.row.board)
+                  "
+                  >[{{ getCommentCount(scope.row.board) }}]</span
+                >
+                🔒</span
               >
-              🔒</span
-            > -->
+            -->
 
-            <div v-if="c.flag === 3 && (isSuperAdmin ||c.created_by ===user.profile.user.id )" v-html="c.comment">🔒</div>
-            <div v-else-if="c.flag ===3">비공개 댓글입니다. 🔒</div>
+            <div
+              v-if="
+                c.flag === 3 &&
+                  (isSuperAdmin || c.created_by === user.profile.user.id)
+              "
+              v-html="c.comment"
+            >
+              🔒
+            </div>
+            <div v-else-if="c.flag === 3">비공개 댓글입니다. 🔒</div>
             <div v-else v-html="c.comment"></div>
           </div>
         </div>
@@ -256,18 +270,21 @@ export default {
     chageflag(id, comment) {
       this.flag = true;
       this.commentIndex = id;
-      this.comment = comment;
+      let str = comment.replace(/<br\s*\/?>/mg,"\n")
+      this.comment = str;
       // await api.putComment(comment_id, content)
     },
     async changeComment(comment_id) {
-      if (!this.comment.length) {
+      if (!this.comment.trim().length) {
         this.$error("댓글을 입력해주세요");
         return;
       }
+      let str = this.comment.replace(/ /g, "\u00a0");
+      str = str.replace(/(?:\r\n|\r|\n)/g, "<br/>");
       this.$Modal.confirm({
         content: "댓글을 수정하시겠습니까?",
         onOk: async () => {
-          await api.putComment(comment_id, this.comment);
+          await api.putComment(comment_id, str);
           const reuslt = await this.getBoard(this.$route.params["board_id"]);
           this.flag = false;
           this.comment = "";
@@ -411,4 +428,7 @@ body .el-container {
 .board_comment button {
   padding: 11px !important;
 }
+.comment .el-textarea__inner{
+    min-height: 45px !important;
+  }
 </style>

@@ -314,12 +314,13 @@ export default {
       }
     })
   },
-  postComment(comment, board_id, created_by_id){
+  postComment(comment, board_id, created_by_id, type){
     return ajax('comment', 'post',{
       data:{
         comment,
         board_id,
-        created_by_id
+        created_by_id,
+        type
       }
     })
   },

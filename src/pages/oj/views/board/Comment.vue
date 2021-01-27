@@ -8,6 +8,7 @@
       v-model="input"
     ></el-input>
     <el-button @click="postComment">입력</el-button>
+    <el-checkbox  v-model="checked" class="secret-comment secret-checkbox">비밀댓글</el-checkbox>
   </div>
 </template>
 
@@ -18,7 +19,8 @@ export default {
   name: "Comment",
   data() {
     return {
-      input: ""
+      input: "",
+      checked:""
     };
   },
   computed: {
@@ -36,14 +38,15 @@ export default {
   methods: {
     ...mapActions(["getBoard"]),
     async postComment() {
-      if (!this.input.length) {
+      if (!this.input.trim().length) {
         this.$error("댓글을 입력해주세요");
         return;
       }
+      
       let str = this.input.replace(/ /g, "\u00a0");
       str = str.replace(/(?:\r\n|\r|\n)/g, "<br/>");
       const parameter = this.$route.params["board_id"];
-      await api.postComment(str, parameter, this.user.profile.user.id);
+      await api.postComment(str, parameter, this.user.profile.user.id, this.checked ? "secret" : "");
       this.getBoard(this.$route.params["board_id"]);
       this.input = "";
     }
@@ -51,7 +54,7 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 .comment {
   position: relative;
   text-align: center;
@@ -70,7 +73,17 @@ export default {
     bottom: 0;
   }
   .el-textarea__inner{
-    min-height: 300px !important;
+    min-height: 45px !important;
   }
+  .secret-comment{
+    position: absolute;
+    right: 45px;
+    bottom: -23px;
+    // transform: translateY(50%);
+  }
+
 }
+  .el-textarea__inner{
+    min-height: 45px !important;
+  }
 </style>
