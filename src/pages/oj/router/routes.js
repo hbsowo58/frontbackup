@@ -5,6 +5,7 @@ import {
   Announcements,
   ApplyResetPassword,
   FAQ,
+  Java,
   Home,
   Logout,
   NotFound,
@@ -208,6 +209,12 @@ export default [
     name: 'faq',
     meta: {title: 'FAQ'},
     component: FAQ
+  },
+  {
+    path: '/java',
+    name: 'java',
+    meta: {title: 'Java'},
+    component: Java
   },
   {
     path: '*',

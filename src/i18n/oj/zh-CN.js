@@ -153,7 +153,7 @@ export const m = {
   OI_Rank: 'OI 排名',
   About: '关于',
   Judger: '评分器',
-  FAQ: '常见问题',
+  FAQ: '소스코드 제출방법',
   Login: '登录',
   Register: '注册',
   MyHome: '我的主页',

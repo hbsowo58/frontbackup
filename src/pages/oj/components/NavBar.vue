@@ -82,6 +82,9 @@
         <Menu-item name="/FAQ">
           {{$t('m.FAQ')}}
         </Menu-item>
+        <Menu-item name="/Java">
+          {{$t('Java 입출력방법')}}
+        </Menu-item>
       </Submenu>
 
       <Menu-item name="/board" v-if=" isSuperAdmin || user['email'] !== undefined && checkSamsung(user['email'])">
