@@ -2,7 +2,8 @@ import Vue from 'vue'
 import router from './router'
 import axios from 'axios'
 import utils from '@/utils/utils'
-
+// a aaaa.bbb.ccc 
+// b bbb.cccc.dddd 
 Vue.prototype.$http = axios
 axios.defaults.baseURL = '/api'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
