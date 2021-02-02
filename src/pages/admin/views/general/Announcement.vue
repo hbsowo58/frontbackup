@@ -150,7 +150,6 @@
           this.getAnnouncementList(1)
         }
       },
-      // 切换页码回调
       currentChange (page) {
         this.currentPage = page
         this.getAnnouncementList(page)

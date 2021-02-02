@@ -312,6 +312,7 @@
           
           // problem.languages = problem.languages.sort()
           this.problem = problem
+          // console.log(problem);
           this.changePie(problem)
 
           // 在beforeRouteEnter中修改了, 说明本地有code，无需加载template
@@ -402,7 +403,14 @@
         const checkStatus = () => {
           let id = this.submissionId
           api.getSubmission(id).then(res => {
+            console.log("GETSUB")
             this.result = res.data.data
+            console.log(this.result)
+            //써먹을만한 것 this.result.code, 
+            if(this.result && this.result.result === -1){
+              // alert("왓더 풕")
+              
+            }
             if (Object.keys(res.data.data.statistic_info).length !== 0) {
               this.submitting = false
               this.submitted = false
@@ -437,7 +445,9 @@
         }
         const submitFunc = (data, detailsVisible) => {
           this.statusVisible = true
+          // console.log(data);
           api.submitCode(data).then(res => {
+            // console.log(res);
             this.submissionId = res.data.data && res.data.data.submission_id
             // 定时检查状态
             this.submitting = false
