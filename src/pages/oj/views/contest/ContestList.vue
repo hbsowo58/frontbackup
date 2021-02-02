@@ -2,7 +2,7 @@
   <Row type="flex">
     <Col :span="24">
     <Panel id="contest-card" shadow>
-      <div slot="title">{{query.rule_type === '' ? this.$i18n.t('m.All') : query.rule_type}} {{$t('m.Contests')}}</div>
+      <div slot="title">기업강의</div>
       <div slot="extra">
         <ul class="filter">
           <!-- <li>
@@ -23,7 +23,7 @@
                 <Icon type="arrow-down-b"></Icon>
               </span>
               <Dropdown-menu slot="list">
-                <Dropdown-item name="">{{$t('m.All')}}</Dropdown-item>
+                <Dropdown-item name="">전체 강의</Dropdown-item>
                 <Dropdown-item name="0">{{$t('m.Underway')}}</Dropdown-item>
                 <Dropdown-item name="1">{{$t('m.Not_Started')}}</Dropdown-item>
                 <Dropdown-item name="-1">{{$t('m.Ended')}}</Dropdown-item>
@@ -36,11 +36,15 @@
           </li>
         </ul>
       </div>
+
       <p id="no-contest" v-if="contests.length == 0">{{$t('m.No_contest')}}</p>
       <ol id="contest-list">
-        <li v-for="contest in contests" :key="contest.title">
+        <li v-for="contest in contests" :key="contest.title" v-if="isSuperAdmin || contest.title.includes(checkEmail(user['email']))">
           <Row type="flex" justify="space-between" align="middle">
-            <img class="trophy" src="../../../../assets/SDS.svg"/>
+            <img v-if ="checkEmail(user['email']) === '삼성' " class="trophy" src="../../../../assets/SDS.svg"/>
+            <img v-if ="checkEmail(user['email']) === 'miracom' " class="trophy" src="../../../../assets/miracom.jpg"/>
+            <img class="trophy" src="../../../../assets/logo_01.svg">
+            <!-- 미라콤들어가야될 로고 자리 -->
             <Col :span="18" class="contest-main">
             <p class="title">
               <a class="entry" @click.stop="goContest(contest)">
@@ -81,11 +85,12 @@
 
 <script>
   import api from '@oj/api'
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapActions, mapState } from "vuex";
   import utils from '@/utils/utils'
   import Pagination from '@/pages/oj/components/Pagination'
   import time from '@/utils/time'
   import { CONTEST_STATUS_REVERSE, CONTEST_TYPE } from '@/utils/constants'
+
 
   const limit = 8
 
@@ -121,7 +126,11 @@
         next()
       })
     },
+    mounted() {
+    this.getProfile();
+    },
     methods: {
+      ...mapActions(["getProfile"]),
       init () {
         let route = this.$route.query
         this.query.status = route.status || ''
@@ -129,6 +138,12 @@
         this.query.keyword = route.keyword || ''
         this.page = parseInt(route.page) || 1
         this.getContestList()
+      },
+      checkEmail(email){
+        if (email === null) return 1;
+        if (email.indexOf("miracom.co.kr") > 1) {return 'miracom';}
+        if (email.indexOf("samsung") > 1) {return '삼성';}  
+          return 0;
       },
       getContestList (page = 1) {
         let offset = (page - 1) * this.limit
@@ -167,10 +182,11 @@
 
       getDuration (startTime, endTime) {
         return time.duration(startTime, endTime)
-      }
+      },
+      
     },
     computed: {
-      ...mapGetters(['isAuthenticated', 'user'])
+      ...mapGetters(['isAuthenticated', 'user', "isSuperAdmin"])
     },
     watch: {
       '$route' (newVal, oldVal) {
