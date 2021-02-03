@@ -87,8 +87,7 @@
         </Menu-item>
       </Submenu>
 
-
-      <Submenu name="board" >
+      <Submenu name="board">
         <template slot="title">
           <Icon type="ios-contact"></Icon>
           <span class="menu-title">{{$t('질문게시판')}}</span>
@@ -102,12 +101,7 @@
         <span class="board">미라콤</span>
       </Menu-item>
       </Submenu>
-
-      <!-- <Menu-item name="/board" v-if="user.profile.user.email.indexOf("samsung") > 0">
-        <Icon type="ios-pulse-strong"></Icon>
-        <span>{{$t('게시판')}}</span>
-      </Menu-item> -->
-      
+     
       <template v-if="!isAuthenticated">
         <div class="btn-menu">
           <Button type="ghost"
@@ -159,6 +153,7 @@
     },
     mounted () {
       this.getProfile()
+      // console.log(this.$router)
     },
     computed:{
       ...mapState(["user"])
@@ -167,7 +162,11 @@
       ...mapActions(['getProfile', 'changeModalStatus']),
       handleRoute (route) {
         if (route && route.indexOf('admin') < 0) {
-          this.$router.push(route)
+          this.$router.push(route).catch(e =>{
+            if(e.name !== "NaviationDuplicated"){
+              return this.currentRoute
+            }
+          })
         } else {
           window.open('/admin/')
         }

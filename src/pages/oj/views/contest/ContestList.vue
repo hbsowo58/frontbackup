@@ -2,7 +2,7 @@
   <Row type="flex">
     <Col :span="24">
     <Panel id="contest-card" shadow>
-      <div slot="title">기업강의</div>
+      <div slot="title">집합교육</div>
       <div slot="extra">
         <ul class="filter">
           <!-- <li>

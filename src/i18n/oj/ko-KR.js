@@ -147,7 +147,7 @@ export const m = {
   Home: 'Home',
   Category: '문제리스트',
   NavProblems: '문제은행',
-  Contests: '기업강의',
+  Contests: '집합교육',
   NavStatus: '채점결과',
   Rank: '랭킹',
   ACM_Rank: 'ACM 랭킹',

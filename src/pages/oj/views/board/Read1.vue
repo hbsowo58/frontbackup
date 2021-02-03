@@ -103,9 +103,6 @@
         </el-pagination>
       </div>
     </el-footer>
-
-    <!-- {{user.profile.user.email.includes('miracom')}} -->
-
   </el-container>
 </template>
 
@@ -113,7 +110,6 @@
 import time from "@/utils/time";
 import api from "@oj/api";
 import { mapGetters, mapState } from "vuex";
-// import data from '../data'
 export default {
   name: "Read1",
   data() {
@@ -126,20 +122,12 @@ export default {
   },
   async mounted() {
     this.getBoardList();
-    // console.log(this.user.profile['user'])
   },
   computed: {
     ...mapState(["user"]),
     ...mapGetters(["isSuperAdmin"])
   },
   methods: {
-    checkEmail(){
-      const email = this.user.profile['user'].email
-      if (email === null) return 1;
-      if (email.indexOf("miracom.co.kr") > 1) {return 'miracom';}
-      if (email.indexOf("samsung") > 1) {return 'samsung';}  
-      return 0;
-    },
     toLocalTime(data) {
       const result = time.utcToLocal(data, "HH시 mm분");
       return result;
@@ -153,30 +141,19 @@ export default {
       const response = await api.getBoardList({
         limit: 10,
         offset: (this.currentPage - 1) * 10,
-        keyword: this.keyword
+        keyword: this.keyword,
+        company:'MIRACOM'
       });
       // console.log(response)
       // const data = Object.entries(response).find(el => el[0] === "data");
       const data = Object.entries(response).find(el => el[0] === "data");
-      // console.log(data[1]["data"]["results"])
-      
-      const email = this.checkEmail();
-
       this.total = data[1]["data"]["total"];
       const result = data[1]["data"]["results"];
-
-
-      // const a = result.filter(e => e.company.includes("SDS"))
-      // console.log(a);
-
       this.data = result;
-      // this.data = a;
-      // console.log('마지막작성자 이메일', this.data[0].email)
-      // console.log('사용자', this.user.profile['user'].email)
     },
     write() {
       this.$router.push({
-        path: "create"
+        path: "create1"
       });
     },
     detail(id, column, cell, event) {

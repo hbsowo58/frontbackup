@@ -276,15 +276,6 @@ export default {
       params
     })
   },
-
-  // 미라콤 보드가져오기
-  getBoardList1 (params) {
-    // params.limit = limit
-    // params.offset = offset
-    return ajax('board-list1', 'get', {
-      params
-    })
-  },
   
   getBoardDetail(params){
     // console.log(params);

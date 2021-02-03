@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Read1/>
+    <Read1 />
   </div>
 </template>
 
@@ -12,6 +12,9 @@ export default {
   data () {
     return {
     }
-  }
+  },
+  updated() {
+    this.$router.go(this.$router.currentRoute);
+  },
 }
 </script>
