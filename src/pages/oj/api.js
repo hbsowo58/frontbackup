@@ -270,7 +270,7 @@ export default {
     })
   },
   getBoardList (params) {
-    // console.log(params)
+    console.log(params)
     // params.limit = limit
     // params.offset = offset
     return ajax('board-list', 'get', {

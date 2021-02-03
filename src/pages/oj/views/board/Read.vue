@@ -22,10 +22,9 @@
 
         <el-table-column prop="title" label="제목" align="left">
           <template slot-scope="scope">
-    
             <span
               style="padding-left:30px;"
-              v-if="scope.row.flag == 3 &&user.profile && (isSuperAdmin || scope.row.created_by == user.profile.user.id)"
+              v-if="scope.row.flag == 3 && user.profile && (isSuperAdmin || scope.row.created_by == user.profile.user.id)"
               >{{ scope.row.title }}
               <span
                 v-if="
@@ -104,6 +103,9 @@
         </el-pagination>
       </div>
     </el-footer>
+
+    <!-- {{user.profile.user.email.includes('miracom')}} -->
+
   </el-container>
 </template>
 
@@ -123,20 +125,21 @@ export default {
     };
   },
   async mounted() {
-    // const response = await api.getBoardList({limit:10, offset:30});
     this.getBoardList();
-    // const data = this.user.profile.user.email;
-    // console.log(data);
-    // if(data.indexOf() < -1){
-    //   this.$router.push("/");
-    // }
-    // console.log(this.user.profile.user.id);
+    // console.log(this.user.profile['user'])
   },
   computed: {
     ...mapState(["user"]),
     ...mapGetters(["isSuperAdmin"])
   },
   methods: {
+    checkEmail(){
+      const email = this.user.profile['user'].email
+      if (email === null) return 1;
+      if (email.indexOf("miracom.co.kr") > 1) {return 'miracom';}
+      if (email.indexOf("samsung") > 1) {return 'samsung';}  
+      return 0;
+    },
     toLocalTime(data) {
       const result = time.utcToLocal(data, "HH시 mm분");
       return result;
@@ -152,12 +155,23 @@ export default {
         offset: (this.currentPage - 1) * 10,
         keyword: this.keyword
       });
+      // console.log(response)
+      // const data = Object.entries(response).find(el => el[0] === "data");
       const data = Object.entries(response).find(el => el[0] === "data");
-      // console.log(data);
+      console.log(data[1]["data"]["results"])
+      
+      const email = this.checkEmail();
+
       this.total = data[1]["data"]["total"];
       const result = data[1]["data"]["results"];
-      // console.log(result[0].board.length);
-      this.data = result;
+
+      const a = result.filter(e => e.company.includes("SDS"))
+      // console.log(a);
+
+      // this.data = result;
+      this.data = a;
+      // console.log('마지막작성자 이메일', this.data[0].email)
+      // console.log('사용자', this.user.profile['user'].email)
     },
     write() {
       this.$router.push({

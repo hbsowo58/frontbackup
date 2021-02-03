@@ -87,11 +87,21 @@
         </Menu-item>
       </Submenu>
 
-      <Menu-item name="/board" v-if=" isSuperAdmin || user['email'] !== undefined && checkSamsung(user['email'])">
+
+      <Submenu>
+        <template slot="title">
+          <Icon type="ios-contact"></Icon>
+          <span class="menu-title">{{$t('질문게시판')}}</span>
+        </template>
+      <Menu-item name="/board" v-if=" isSuperAdmin || user['email'] !== undefined && (checkEmail(user['email']) === 'SAMSUNG')">
         <Icon type="ios-contact"></Icon>
-        <!-- <span>{{$t('게시판')}}</span> -->
-        <span class="board">질문게시판</span>
+        <span class="board">SDS</span>
       </Menu-item>
+      <Menu-item name="/board1" v-if=" isSuperAdmin || user['email'] !== undefined && (checkEmail(user['email']) === 'MIRACOM')">
+        <Icon type="ios-contact"></Icon>
+        <span class="board">미라콤</span>
+      </Menu-item>
+      </Submenu>
 
       <!-- <Menu-item name="/board" v-if="user.profile.user.email.indexOf("samsung") > 0">
         <Icon type="ios-pulse-strong"></Icon>
@@ -168,11 +178,14 @@
           mode: mode
         })
       },
-      checkSamsung (email) {
+      checkEmail (email) {
         if (email === null) return 1
         //root
         if(email.indexOf('samsung') > 1){
-          return 1
+          return 'SAMSUNG'
+        }
+        if(email.indexOf('miracom.co.kr') > 1){
+          return 'MIRACOM'
         }
         return 0
         //samsung 포함

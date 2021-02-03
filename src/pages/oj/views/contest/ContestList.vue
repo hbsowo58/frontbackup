@@ -43,7 +43,7 @@
           <Row type="flex" justify="space-between" align="middle">
             <img v-if ="checkEmail(user['email']) === '삼성' " class="trophy" src="../../../../assets/SDS.svg"/>
             <img v-if ="checkEmail(user['email']) === 'miracom' " class="trophy" src="../../../../assets/miracom.jpg"/>
-            <img class="trophy" src="../../../../assets/logo_01.svg">
+            <img v-if ="isSuperAdmin" class="trophy" src="../../../../assets/logo_01.svg">
             <!-- 미라콤들어가야될 로고 자리 -->
             <Col :span="18" class="contest-main">
             <p class="title">

@@ -20,6 +20,7 @@ import {
 } from '../views'
 
 import Board from '../views/board/Board.vue'
+import Board1 from '../views/board/Board1.vue'
 import Read from '../views/board/Read.vue'
 import Create from '../views/board/Create.vue'
 import Detail from '../views/board/Detail.vue'
@@ -179,7 +180,7 @@ export default [
     meta: {title: 'About'},
     component: About
   },
-    {
+  {
     path: '/board/:board_id',
     name: 'Detail',
     meta: {requiresAuth: true, title: 'Detail'},
@@ -190,6 +191,12 @@ export default [
     name: 'Board',
     meta: {requiresAuth: true, title: 'Board'},
     component: Board
+  },
+  {
+    path: '/board1',
+    name: 'Board1',
+    meta: {requiresAuth: true, title: 'Board1'},
+    component: Board1
   },
   {
     path: '/read',
