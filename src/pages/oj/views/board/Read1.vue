@@ -115,7 +115,7 @@ import api from "@oj/api";
 import { mapGetters, mapState } from "vuex";
 // import data from '../data'
 export default {
-  name: "Read",
+  name: "Read1",
   data() {
     return {
       total: 0,
@@ -158,16 +158,19 @@ export default {
       // console.log(response)
       // const data = Object.entries(response).find(el => el[0] === "data");
       const data = Object.entries(response).find(el => el[0] === "data");
-      console.log(data[1]["data"]["results"])
+      // console.log(data[1]["data"]["results"])
       
       const email = this.checkEmail();
 
       this.total = data[1]["data"]["total"];
       const result = data[1]["data"]["results"];
 
+
+      // const a = result.filter(e => e.company.includes("SDS"))
       // console.log(a);
 
       this.data = result;
+      // this.data = a;
       // console.log('마지막작성자 이메일', this.data[0].email)
       // console.log('사용자', this.user.profile['user'].email)
     },

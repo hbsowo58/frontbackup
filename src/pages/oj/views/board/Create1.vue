@@ -24,7 +24,7 @@ import api from "@oj/api";
 import data from "../data";
 import { mapActions, mapGetters, mapState } from "vuex";
 export default {
-  name: "Create",
+  name: "Create1",
   components: {
     Simditor
   },
@@ -37,7 +37,7 @@ export default {
       content: "",
       route: "",
       checked:"",
-      company:"SDS"
+      company:"MIRACOM"
     };
   },
   computed: {
@@ -62,7 +62,7 @@ export default {
         this.board.board.created_by !== this.user.profile.user.id
       ) {
         this.$router.push({
-          path: "/board"
+          path: "/board1"
         });
       }
     }
@@ -85,7 +85,7 @@ export default {
           this.company
         );
         this.$router.push({
-          path: "/board"
+          path: "/board1"
         });
       } else if (this.title.length === 0) {
         this.$error("제목을 입력해주세요");
@@ -128,7 +128,7 @@ export default {
                   this.$route.params["board_id"]
                 );
                 this.$router.push({
-                  path: `/board/${this.$route.params["board_id"]}`
+                  path: `/board1/${this.$route.params["board_id"]}`
                 });
               // }
             }

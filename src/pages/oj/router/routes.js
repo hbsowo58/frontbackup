@@ -22,7 +22,9 @@ import {
 import Board from '../views/board/Board.vue'
 import Board1 from '../views/board/Board1.vue'
 import Read from '../views/board/Read.vue'
+import Read1 from '../views/board/Read1.vue'
 import Create from '../views/board/Create.vue'
+import Create1 from '../views/board/Create1.vue'
 import Detail from '../views/board/Detail.vue'
 
 import * as Contest from '@oj/views/contest'
@@ -205,12 +207,23 @@ export default [
     component: Read
   },
   {
+    path: '/read1',
+    name: 'Read1',
+    meta: {title: 'Read1'},
+    component: Read1
+  },
+  {
     path: '/create/:board_id?',
     name: 'Create',
     meta: {title: 'Create'},
     component: Create
   },
-
+  {
+    path: '/create1/:board_id?',
+    name: 'Create1',
+    meta: {title: 'Create1'},
+    component: Create1
+  },
   {
     path: '/faq',
     name: 'faq',

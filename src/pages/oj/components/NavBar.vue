@@ -88,7 +88,7 @@
       </Submenu>
 
 
-      <Submenu>
+      <Submenu name="board" >
         <template slot="title">
           <Icon type="ios-contact"></Icon>
           <span class="menu-title">{{$t('질문게시판')}}</span>

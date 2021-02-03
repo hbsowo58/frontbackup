@@ -270,10 +270,18 @@ export default {
     })
   },
   getBoardList (params) {
-    console.log(params)
     // params.limit = limit
     // params.offset = offset
     return ajax('board-list', 'get', {
+      params
+    })
+  },
+
+  // 미라콤 보드가져오기
+  getBoardList1 (params) {
+    // params.limit = limit
+    // params.offset = offset
+    return ajax('board-list1', 'get', {
       params
     })
   },
@@ -287,14 +295,15 @@ export default {
       }
     })
   },
-  postBoard(title, content, created_by_id, type){
+  postBoard(title, content, created_by_id, type, company){
 
     return ajax('board', 'post',{
       data:{
         title,
         content,
         created_by_id,
-        type
+        type,
+        company
       }
     })
   },
