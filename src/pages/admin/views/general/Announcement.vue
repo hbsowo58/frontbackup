@@ -1,6 +1,6 @@
 <template>
   <div class="announcement view">
-    <Panel title="강사님 코드">
+    <Panel title="공지사항 만들기">
       <div class="list">
         <el-table
           empty-text="검색한 정보가 없습니다"
@@ -59,7 +59,7 @@
           </el-table-column>
         </el-table>
         <div class="panel-options">
-          <el-button type="primary" size="small" @click="openAnnouncementDialog(null)" icon="el-icon-plus">Create</el-button>
+          <el-button type="primary" size="small" @click="openAnnouncementDialog(null)" icon="el-icon-plus">공지사항 생성</el-button>
           <el-pagination
             v-if="!contestID"
             class="page"
@@ -230,6 +230,7 @@
         })
       },
       openAnnouncementDialog (id) {
+        console.log(id)
         this.showEditAnnouncementDialog = true
         if (id !== null) {
           this.currentAnnouncementId = id
@@ -243,7 +244,7 @@
             }
           })
         } else {
-          this.announcementDialogTitle = 'Create Announcement'
+          this.announcementDialogTitle = '공지사항 만들기'
           this.announcement.title = ''
           this.announcement.visible = true
           this.announcement.content = ''

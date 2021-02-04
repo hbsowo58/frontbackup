@@ -69,16 +69,20 @@
     <!-- 공지사항 miracom  -->
     <transition-group name="announcement-animate" mode="in-out" v-if=" isSuperAdmin ||
           (user['email'] !== undefined && checkMiracom(user['email']))">
+
+      <!-- 공지사항 없을경우 -->
       <div
         class="no-announcement"
-        v-if="!announcements.length"
+        v-if="!announcements1.length"
         key="no-announcement"
       >
         <p>{{ $t("m.No_Announcements") }}</p>
       </div>
+
+
       <template v-if="listVisible">
         <ul class="announcements-container" key="list">
-          <li v-for="announcement in announcements" :key="announcement.title">
+          <li v-for="announcement in announcements1" :key="announcement.title">
             <div class="flex-container">
               <div class="title">
                 <a class="entry" @click="goAnnouncement(announcement)">
@@ -113,6 +117,7 @@ export default {
       total: 10,
       btnLoading: false,
       announcements: [],
+      announcements1: [],
       announcement: "",
       listVisible: true
     };
@@ -134,8 +139,10 @@ export default {
       this.btnLoading = true;
       api.getAnnouncementList((page - 1) * this.limit, this.limit).then(
         res => {
+          // console.log(res.data.data.results)
           this.btnLoading = false;
-          this.announcements = res.data.data.results;
+          this.announcements = res.data.data.results.filter(e => e.company === "SDS");
+          this.announcements1 = res.data.data.results.filter(e => e.company === "MIRACOM");
           this.total = res.data.data.total;
         },
         () => {
