@@ -39,10 +39,10 @@
 
       <p id="no-contest" v-if="contests.length == 0">{{$t('m.No_contest')}}</p>
       <ol id="contest-list">
-        <li v-for="contest in contests" :key="contest.title" v-if="isSuperAdmin || contest.title.includes(checkEmail(user['email']))">
+        <li v-for="contest in contests" :key="contest.title" v-if="isSuperAdmin || contest.title.includes(checkEmail(user['email'])) || contest.title.includes((checkEmail(user['email'])).toLowerCase()) || contest.title.includes(company)">
           <Row type="flex" justify="space-between" align="middle">
-            <img v-if ="checkEmail(user['email']) === '삼성' " class="trophy" src="../../../../assets/SDS.svg"/>
-            <img v-if ="checkEmail(user['email']) === 'miracom' " class="trophy" src="../../../../assets/miracom.jpg"/>
+            <img v-if ="checkEmail(user['email']) === 'SDS' " class="trophy" src="../../../../assets/SDS.svg"/>
+            <img v-if ="checkEmail(user['email']) === 'MIRACOM' " class="trophy" src="../../../../assets/miracom.jpg"/>
             <img v-if ="isSuperAdmin" class="trophy" src="../../../../assets/logo_01.svg">
             <!-- 미라콤들어가야될 로고 자리 -->
             <Col :span="18" class="contest-main">
@@ -105,7 +105,7 @@
         query: {
           status: '',
           keyword: '',
-          rule_type: ''
+          rule_type: '',
         },
         limit: limit,
         total: 0,
@@ -113,7 +113,8 @@
         contests: [],
         CONTEST_STATUS_REVERSE: CONTEST_STATUS_REVERSE,
 //      for password modal use
-        cur_contest_id: ''
+        cur_contest_id: '',
+        company:'',
       }
     },
     beforeRouteEnter (to, from, next) {
@@ -141,10 +142,16 @@
       },
       checkEmail(email){
         if (email === null) return 1;
-        if (email.indexOf("miracom.co.kr") > 1) {return 'miracom';}
-        if (email.indexOf("samsung") > 1) {return '삼성';}  
+        if (email.indexOf("miracom.co.kr") > 1) {
+          this.company = '미라콤';
+          return 'MIRACOM';
+        }
+        if (email.indexOf("samsung") > 1) {
+          this.company = "삼성";
+          return 'SDS';}  
           return 0;
       },
+
       getContestList (page = 1) {
         let offset = (page - 1) * this.limit
         api.getContestList(offset, this.limit, this.query).then((res) => {
