@@ -20,13 +20,13 @@ import {
 } from '../views'
 
 import Board from '../views/board/Board.vue'
-import Board_miracom from '../views/board/Board_miracom'
+import BoardMiracom from '../views/board/BoardMiracom'
 import Read from '../views/board/Read.vue'
-import Read_miracom from '../views/board/Read_miracom.vue'
+import ReadMiracom from '../views/board/ReadMiracom.vue'
 import Create from '../views/board/Create.vue'
-import Create_miracom from '../views/board/Create_miracom.vue'
+import CreateMiracom from '../views/board/CreateMiracom.vue'
 import Detail from '../views/board/Detail.vue'
-import Board_miracom_detail from '../views/board/Board_miracom_detail'
+import DetailMiracom from '../views/board/DetailMiracom.vue'
 
 import * as Contest from '@oj/views/contest'
 import * as Setting from '@oj/views/setting'
@@ -196,16 +196,16 @@ export default [
     component: Board
   },
   {
-    path: '/board_miracom/:board_id',
+    path: '/board-miracom/:board_id',
     name: 'Board_miracom_detail',
-    meta: {requiresAuth: true, title: 'Board_miracom'},
-    component: Board_miracom_detail
+    meta: {requiresAuth: true, title: 'miacom_Detail'},
+    component: DetailMiracom
   },
   {
-    path: '/board_miracom',
-    name: 'Board_miracom',
-    meta: {requiresAuth: true, title: 'Board_miracom'},
-    component: Board_miracom
+    path: '/board-miracom',
+    name: 'Board-miracom',
+    meta: {requiresAuth: true, title: 'Board-miracom'},
+    component: BoardMiracom
   },
 
   {
@@ -218,7 +218,7 @@ export default [
     path: '/read_miracom',
     name: 'Read_miracom',
     meta: {title: 'Read_miracom'},
-    component: Read_miracom
+    component: ReadMiracom
   },
   {
     path: '/create/:board_id?',
@@ -227,10 +227,10 @@ export default [
     component: Create
   },
   {
-    path: '/create_miracom/:board_id?',
-    name: 'Create_miracom',
+    path: '/create-miracom/:board_id?',
+    name: 'Create-miracom',
     meta: {title: 'Create_miracom'},
-    component: Create_miracom
+    component: CreateMiracom
   },
   {
     path: '/faq',

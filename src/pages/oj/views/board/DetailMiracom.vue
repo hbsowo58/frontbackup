@@ -196,9 +196,10 @@ export default {
     ...mapState(["board", "user"])
   },
   async mounted() {
+    // this.getBoard(this.$route.params["board_id"]);
     // console.log(time);
     // await this.getData();
-    // const reuslt = await this.getBoard(this.$route.params["board_id"]);
+    const reuslt = await this.getBoard(this.$route.params["board_id"]);
     // console.log(this.board.board);
     // api.postBoard("치킨","jmt", loginId);
     // const test1 = await api.putBoard("믿고있었다고", "젠장!!!",parameter);
@@ -215,6 +216,7 @@ export default {
   },
   methods: {
     ...mapActions(["getBoard"]),
+    
 
     toLocal(data) {
       const result = time.utcToLocal(data, "YYYY년 M월 D일 HH시 mm분");
@@ -238,18 +240,18 @@ export default {
         onOk: async () => {
           await api.deleteBoard(this.$route.params["board_id"]);
           this.$router.push({
-            path: "/board_miracom"
+            path: "/board-miracom"
           });
         },
         onCancel: () => {}
       });
     },
     updateData() {
-      this.$router.push(`/create_miracom/${this.$route.params["board_id"]}`);
+      this.$router.push(`/create/${this.$route.params["board_id"]}`);
     },
     list() {
       this.$router.push({
-        path: "/board_miracom"
+        path: "/board-miracom"
       });
     },
     write() {

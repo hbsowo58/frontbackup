@@ -62,7 +62,7 @@ export default {
         this.board.board.created_by !== this.user.profile.user.id
       ) {
         this.$router.push({
-          path: "/board_miracom"
+          path: "/board-miracom"
         });
       }
     }
@@ -85,7 +85,7 @@ export default {
           this.company
         );
         this.$router.push({
-          path: "/board_miracom"
+          path: "/board-miracom"
         });
       } else if (this.title.length === 0) {
         this.$error("제목을 입력해주세요");
@@ -128,7 +128,7 @@ export default {
                   this.$route.params["board_id"]
                 );
                 this.$router.push({
-                  path: `/board_miracom/${this.$route.params["board_id"]}`
+                  path: `/board-miracom/${this.$route.params["board_id"]}`
                 });
               // }
             }

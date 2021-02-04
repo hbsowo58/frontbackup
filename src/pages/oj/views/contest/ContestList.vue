@@ -41,10 +41,8 @@
       <ol id="contest-list">
         <li v-for="contest in contests" :key="contest.title" v-if="isSuperAdmin || contest.title.includes(checkEmail(user['email'])) || contest.title.includes((checkEmail(user['email'])).toLowerCase()) || contest.title.includes(company)">
           <Row type="flex" justify="space-between" align="middle">
-            <img v-if="contest.title.includes(checkEmail(user['email']))" class="trophy" src="../../../../assets/SDS.svg"/>
-            <!-- {{contest.title}}
-            {{contest.title.includes(checkEmail(user['email']))}} -->
-            <img v-if ="checkEmail(user['email']) === 'MIRACOM' " class="trophy" src="../../../../assets/miracom_logo.svg"/>
+            <img v-if="checkSamsungImage(contest.title)" class="trophy" src="../../../../assets/SDS.svg"/>
+            <img v-if="checkMiracomImage(contest.title)" class="trophy" src="../../../../assets/miracom_logo.svg"/>
             <!-- 미라콤들어가야될 로고 자리 -->
             <Col :span="18" class="contest-main">
             <p class="title">
@@ -152,7 +150,12 @@
           return 'SDS';}  
           return 0;
       },
-
+      checkSamsungImage(title){
+        return title.includes('SDS') || title.includes('sds') || title.includes('삼성');
+      },
+      checkMiracomImage(title){
+        return title.includes('MIRACOM') || title.includes('miracom') || title.includes('미라콤');
+      },
       getContestList (page = 1) {
         let offset = (page - 1) * this.limit
         api.getContestList(offset, this.limit, this.query).then((res) => {

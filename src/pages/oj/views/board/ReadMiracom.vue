@@ -161,7 +161,7 @@ export default {
 
       if (this.isSuperAdmin || (this.user.profile.user && id.created_by === this.user.profile.user.id )|| (id.flag !== 3 && column.property === "title")) {
         console.log(id.id);
-        this.$router.push(`/board_miracom/${id.id}`);
+        this.$router.push(`/board-miracom/${id.id}`);
       }
       // console.log(id);
       // console.log(column);

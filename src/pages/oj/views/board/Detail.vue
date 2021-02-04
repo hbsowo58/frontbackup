@@ -198,7 +198,7 @@ export default {
   async mounted() {
     // console.log(time);
     // await this.getData();
-    // const reuslt = await this.getBoard(this.$route.params["board_id"]);
+    const reuslt = await this.getBoard(this.$route.params["board_id"]);
     // console.log(this.board.board);
     // api.postBoard("치킨","jmt", loginId);
     // const test1 = await api.putBoard("믿고있었다고", "젠장!!!",parameter);
