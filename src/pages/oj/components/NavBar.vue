@@ -162,11 +162,12 @@
       ...mapActions(['getProfile', 'changeModalStatus']),
       handleRoute (route) {
         if (route && route.indexOf('admin') < 0) {
-          this.$router.push(route).catch(e =>{
-            if(e.name !== "NaviationDuplicated"){
-              return this.currentRoute
-            }
-          })
+          this.$router.push(route);
+          // .catch(e =>{
+          //   if(e.name !== "NaviationDuplicated"){
+          //     return this.currentRoute
+          //   }
+          // })
         } else {
           window.open('/admin/')
         }

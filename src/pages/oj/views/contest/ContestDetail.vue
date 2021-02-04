@@ -12,6 +12,12 @@
             <Panel :padding="20" shadow>
               <div slot="title">
                 {{contest.title}}
+              <div v-if="passwordFormVisible" class="contest-password">
+                <Input ref="input" v-model="contestPassword" type="password"
+                       placeholder="집합교육 비밀번호를 입력해주세요" class="contest-password-input"
+                       @on-enter="checkPassword"/>
+                <Button type="info" @click="checkPassword">Enter</Button>
+              </div>
               </div>
               <div slot="extra">
                 <Tag type="dot" :color="countdownColor">
@@ -19,12 +25,7 @@
                 </Tag>
               </div>
               <div v-html="contest.description" class="markdown-body"></div>
-              <div v-if="passwordFormVisible" class="contest-password">
-                <Input v-model="contestPassword" type="password"
-                       placeholder="contest password" class="contest-password-input"
-                       @on-enter="checkPassword"/>
-                <Button type="info" @click="checkPassword">Enter</Button>
-              </div>
+
             </Panel>
             <Table :columns="columns" :data="contest_table" disabled-hover style="margin-bottom: 40px;"></Table>
           </div>
@@ -128,6 +129,10 @@
       }
     },
     mounted () {
+      // this.$refs.contestPasswordRef;
+      console.log(this.$refs)
+      console.log(this.$refs.input)
+      console.log(this.$refs['input'])
       this.contestID = this.$route.params.contestID
       this.route_name = this.$route.name
       this.$store.dispatch('getContest').then(res => {
