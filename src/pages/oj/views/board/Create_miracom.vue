@@ -24,7 +24,7 @@ import api from "@oj/api";
 import data from "../data";
 import { mapActions, mapGetters, mapState } from "vuex";
 export default {
-  name: "Create1",
+  name: "Create_miracom",
   components: {
     Simditor
   },

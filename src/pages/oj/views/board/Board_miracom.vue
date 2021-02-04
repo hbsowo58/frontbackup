@@ -1,13 +1,13 @@
 <template>
   <div>
-    <Read1 />
+    <Read_miracom />
   </div>
 </template>
 
 <script>
-import Read1 from './Read1.vue'
+import Read_miracom from './Read_miracom.vue'
 export default {
-  components: { Read1 },
+  components: { Read_miracom },
   name: 'Board_miracom',
   data () {
     return {

@@ -22,9 +22,9 @@ import {
 import Board from '../views/board/Board.vue'
 import Board_miracom from '../views/board/Board_miracom'
 import Read from '../views/board/Read.vue'
-import Read1 from '../views/board/Read1.vue'
+import Read_miracom from '../views/board/Read_miracom.vue'
 import Create from '../views/board/Create.vue'
-import Create1 from '../views/board/Create1.vue'
+import Create_miracom from '../views/board/Create_miracom.vue'
 import Detail from '../views/board/Detail.vue'
 
 import * as Contest from '@oj/views/contest'
@@ -207,10 +207,10 @@ export default [
     component: Read
   },
   {
-    path: '/read1',
-    name: 'Read1',
-    meta: {title: 'Read1'},
-    component: Read1
+    path: '/read_miracom',
+    name: 'Read_miracom',
+    meta: {title: 'Read_miracom'},
+    component: Read_miracom
   },
   {
     path: '/create/:board_id?',
@@ -219,10 +219,10 @@ export default [
     component: Create
   },
   {
-    path: '/create1/:board_id?',
-    name: 'Create1',
-    meta: {title: 'Create1'},
-    component: Create1
+    path: '/create_miracom/:board_id?',
+    name: 'Create_miracom',
+    meta: {title: 'Create_miracom'},
+    component: Create_miracom
   },
   {
     path: '/faq',

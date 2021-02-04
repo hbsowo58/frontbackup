@@ -111,7 +111,7 @@ import time from "@/utils/time";
 import api from "@oj/api";
 import { mapGetters, mapState } from "vuex";
 export default {
-  name: "Read1",
+  name: "Read_miracom",
   data() {
     return {
       total: 0,
@@ -153,7 +153,7 @@ export default {
     },
     write() {
       this.$router.push({
-        path: "create1"
+        path: "create_miracom"
       });
     },
     detail(id, column, cell, event) {
