@@ -247,7 +247,7 @@ export default {
       });
     },
     updateData() {
-      this.$router.push(`/create/${this.$route.params["board_id"]}`);
+      this.$router.push(`/create-miracom/${this.$route.params["board_id"]}`);
     },
     list() {
       this.$router.push({
@@ -256,7 +256,7 @@ export default {
     },
     write() {
       this.$router.push({
-        path: "/create"
+        path: "/create-miracom"
       });
     },
     deleteComment(id) {
