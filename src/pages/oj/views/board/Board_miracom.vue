@@ -14,7 +14,7 @@ export default {
     }
   },
   updated() {
-    this.$router.go(this.$router.currentRoute);
+    // this.$router.go(this.$router.currentRoute);
   },
 }
 </script>
