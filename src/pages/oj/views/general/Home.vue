@@ -16,12 +16,13 @@
   <Row type="flex" justify="space-around">
     <Col :span="22">
       <br>
+      <!-- 0204 NEW위에 캐러셀 삭제 -->
+      <!--
       <panel shadow v-if="contests.length" class="contest">
       <div slot="title">
       <Button type="text"  class="contest-title" @click="goContest">{{contests[index].title}}</Button>
       </div>
-  
-      <Carousel v-model="index" trigger="hover" autoplay :autoplay-speed="6000" class="contest">
+       <Carousel v-model="index" trigger="hover" autoplay :autoplay-speed="6000" class="contest">
         <CarouselItem v-for="(contest, index) of contests" :key="index">
         <div class="contest-content">
         <div class="contest-content-tags">
@@ -40,8 +41,9 @@
     </div>
   </div>
     </CarouselItem>
-  </Carousel>
+      </Carousel>
       </panel>
+       -->
       <Announcements class="announcement"></Announcements>
     </Col>
   </Row>
