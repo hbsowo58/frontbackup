@@ -14,7 +14,7 @@
                 {{contest.title}}
               <div v-if="passwordFormVisible" class="contest-password">
                 <Input ref="input" v-model="contestPassword" type="password"
-                       placeholder="집합교육 비밀번호를 입력해주세요" class="contest-password-input"
+                       placeholder="비밀번호를 입력" class="contest-password-input"
                        @on-enter="checkPassword"/>
                 <Button type="info" @click="checkPassword">Enter</Button>
               </div>

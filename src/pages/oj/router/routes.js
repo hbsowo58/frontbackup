@@ -26,6 +26,7 @@ import Read_miracom from '../views/board/Read_miracom.vue'
 import Create from '../views/board/Create.vue'
 import Create_miracom from '../views/board/Create_miracom.vue'
 import Detail from '../views/board/Detail.vue'
+import Board_miracom_detail from '../views/board/Board_miracom_detail'
 
 import * as Contest from '@oj/views/contest'
 import * as Setting from '@oj/views/setting'
@@ -195,11 +196,18 @@ export default [
     component: Board
   },
   {
+    path: '/board_miracom/:board_id',
+    name: 'Board_miracom_detail',
+    meta: {requiresAuth: true, title: 'Board_miracom'},
+    component: Board_miracom_detail
+  },
+  {
     path: '/board_miracom',
     name: 'Board_miracom',
     meta: {requiresAuth: true, title: 'Board_miracom'},
     component: Board_miracom
   },
+
   {
     path: '/read',
     name: 'Read',

@@ -94,11 +94,15 @@
         </template>
       <Menu-item name="/board" v-if=" isSuperAdmin || user['email'] !== undefined && (checkEmail(user['email']) === 'SAMSUNG')">
         <Icon type="ios-contact"></Icon>
-        <span class="board">SDS</span>
+        <span class="board">SDS 전용</span>
       </Menu-item>
-      <Menu-item name="/board_miracom" v-if=" isSuperAdmin || user['email'] !== undefined && (checkEmail(user['email']) === 'MIRACOM')">
+      <Menu-item disabled name="/board_miracom"  v-if=" isSuperAdmin || user['email'] !== undefined && (checkEmail(user['email']) === 'MIRACOM')">
         <Icon type="ios-contact"></Icon>
-        <span class="board">미라콤</span>
+        <span class="board">미라콤 전용</span>
+      </Menu-item>
+      <Menu-item name="/" disabled>
+        <Icon type="ios-contact"></Icon>
+        <span class="board">강사 전용</span>
       </Menu-item>
       </Submenu>
      
