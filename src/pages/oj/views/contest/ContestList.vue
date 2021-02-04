@@ -41,9 +41,10 @@
       <ol id="contest-list">
         <li v-for="contest in contests" :key="contest.title" v-if="isSuperAdmin || contest.title.includes(checkEmail(user['email'])) || contest.title.includes((checkEmail(user['email'])).toLowerCase()) || contest.title.includes(company)">
           <Row type="flex" justify="space-between" align="middle">
-            <img v-if ="checkEmail(user['email']) === 'SDS' " class="trophy" src="../../../../assets/SDS.svg"/>
+            <img v-if="contest.title.includes(checkEmail(user['email']))" class="trophy" src="../../../../assets/SDS.svg"/>
+            <!-- {{contest.title}}
+            {{contest.title.includes(checkEmail(user['email']))}} -->
             <img v-if ="checkEmail(user['email']) === 'MIRACOM' " class="trophy" src="../../../../assets/miracom_logo.svg"/>
-            <img v-if ="isSuperAdmin" class="trophy" src="../../../../assets/logo_01.svg">
             <!-- 미라콤들어가야될 로고 자리 -->
             <Col :span="18" class="contest-main">
             <p class="title">

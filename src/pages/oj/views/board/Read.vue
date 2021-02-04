@@ -127,6 +127,7 @@ export default {
       return result;
     },
     async getBoardList() {
+      
       const response = await api.getBoardList({
         limit: 10,
         offset: (this.currentPage - 1) * 10,
@@ -136,9 +137,10 @@ export default {
       // console.log(response)
       // const data = Object.entries(response).find(el => el[0] === "data");
       const data = Object.entries(response).find(el => el[0] === "data");
-      // this.total = data[1]["data"]["total"];
+      this.total = data[1]["data"]["total"];
       const result = data[1]["data"]["results"];
       this.data = result;
+      console.log(this.total);
     },
     write() {
       this.$router.push({
