@@ -153,7 +153,7 @@ export default {
     },
     write() {
       this.$router.push({
-        path: "create_miracom"
+        path: "create-miracom"
       });
     },
     detail(id, column, cell, event) {
