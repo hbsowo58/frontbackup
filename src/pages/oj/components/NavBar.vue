@@ -87,7 +87,7 @@
         </Menu-item>
       </Submenu>
 
-      <Submenu name="board">
+      <Submenu name="board" v-if="isSuperAdmin || user['email'] !== undefined && (checkEmail(user['email']) === 'SAMSUNG') || user['email'] !== undefined && (checkEmail(user['email']) === 'MIRACOM')">
         <template slot="title">
           <Icon type="ios-contact"></Icon>
           <span class="menu-title">{{$t('질문게시판')}}</span>
@@ -96,7 +96,7 @@
         <Icon type="ios-contact"></Icon>
         <span class="board">SDS</span>
       </Menu-item>
-      <Menu-item name="/board1" v-if=" isSuperAdmin || user['email'] !== undefined && (checkEmail(user['email']) === 'MIRACOM')">
+      <Menu-item name="/board_miracom" v-if=" isSuperAdmin || user['email'] !== undefined && (checkEmail(user['email']) === 'MIRACOM')">
         <Icon type="ios-contact"></Icon>
         <span class="board">미라콤</span>
       </Menu-item>

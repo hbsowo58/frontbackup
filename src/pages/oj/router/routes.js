@@ -20,7 +20,7 @@ import {
 } from '../views'
 
 import Board from '../views/board/Board.vue'
-import Board1 from '../views/board/Board1.vue'
+import Board_miracom from '../views/board/Board_miracom'
 import Read from '../views/board/Read.vue'
 import Read1 from '../views/board/Read1.vue'
 import Create from '../views/board/Create.vue'
@@ -195,10 +195,10 @@ export default [
     component: Board
   },
   {
-    path: '/board1',
-    name: 'Board1',
-    meta: {requiresAuth: true, title: 'Board1'},
-    component: Board1
+    path: '/board_miracom',
+    name: 'Board_miracom',
+    meta: {requiresAuth: true, title: 'Board_miracom'},
+    component: Board_miracom
   },
   {
     path: '/read',

@@ -8,7 +8,7 @@
 import Read1 from './Read1.vue'
 export default {
   components: { Read1 },
-  name: 'Board1',
+  name: 'Board_miracom',
   data () {
     return {
     }
