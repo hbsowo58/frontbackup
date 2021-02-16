@@ -86,7 +86,7 @@
             <div class="flex-container">
               <div class="title">
                 <a class="entry" @click="goAnnouncement(announcement)">
-                  [Miracom]{{ announcement.title }}</a
+                  [미라콤]{{ announcement.title }}</a
                 >
               </div>
               <div class="date">{{ announcement.create_time | localtime }}</div>

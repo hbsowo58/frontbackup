@@ -67,7 +67,7 @@
       <Row type="flex" :gutter="30" justify="space-around">
         <Col :span="11">
           <FormItem label="이름">
-            <Input v-model="formProfile.real_name" :disabled = "true"/>
+            <Input v-model="formProfile.real_name" />
           </FormItem>
 
           <Form-item label="사번">
