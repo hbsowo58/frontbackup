@@ -124,8 +124,8 @@
             <Input v-model="email" :disabled = "true"/>
           </Form-item>
 
-          <Form-item label="소속">
-            <Input v-model="formProfile.github"/>
+          <Form-item label="소속코드">
+            <Input v-model="formProfile.github" placeholder="소속 코드를 입력해주세요."/>
           </Form-item>
 
           <!--
