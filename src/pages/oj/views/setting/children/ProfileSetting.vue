@@ -116,16 +116,17 @@
             <Input v-model="formProfile.blog"/>
           </Form-item>
 
-          <Form-item label="소속">
-            <Input v-model="formProfile.github"/>
-          </Form-item>
-
           -->
+          
+
 
           <Form-item label="Email">
             <Input v-model="email" :disabled = "true"/>
           </Form-item>
 
+          <Form-item label="소속">
+            <Input v-model="formProfile.github"/>
+          </Form-item>
 
           <!--
           <FormItem label="주력언어">
