@@ -201,6 +201,12 @@
             <el-form-item :label="$t('m.User_New_Password')">
               <el-input v-model="user.password"></el-input>
             </el-form-item>
+          <!-- 소속코드 추가 -->
+          </el-col>
+          <el-col :span="12">
+            <el-form-item :label="$t('소속코드')">
+              <el-input v-model="user.github"></el-input>
+            </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item :label="$t('m.User_Type')">
@@ -305,8 +311,10 @@
       },
       // 提交修改用户的信息
       saveUser () {
+        console.log(this.user)
         api.editUser(this.user).then(res => {
           // 更新列表
+          // console.log(res.data.data)
           this.getUserList(this.currentPage)
         }).then(() => {
           this.showUserDialog = false
@@ -317,7 +325,6 @@
       openUserDialog (id) {
         this.showUserDialog = true
         api.getUser(id).then(res => {
-          console.log(res.data.data)
           this.user = res.data.data
           this.user.password = ''
           this.user.real_tfa = this.user.two_factor_auth
