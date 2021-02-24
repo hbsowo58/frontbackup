@@ -23,6 +23,10 @@ const router = new VueRouter({
 // 全局身份确认
 router.beforeEach((to, from, next) => {
   Vue.prototype.$Loading.start()
+  // console.log(to)
+  // console.log(store.state['user'])
+  // console.log(user)
+  // console.log(userinfo)
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!storage.get(STORAGE_KEY.AUTHED)) {
       Vue.prototype.$error('Please login first')
@@ -31,6 +35,22 @@ router.beforeEach((to, from, next) => {
         name: 'home'
       })  
     }
+    // else if(to.name === "Board-miracom"){
+    //   (async function(){
+    //     console.log(store.getters)
+    //     const userbelong = Object.assign({}, store.getters);
+    //     // if(store.getters.isSuperAdmin === true){
+    //     //   next();
+    //     // }
+    //     if(userbelong.userinfonum !== 'sds' && userbelong.userinfonum !== 'MIRACOM'){
+    //       Vue.prototype.$error('미라콤만 입장가능')
+    //       next({
+    //         name: 'home'
+    //       })  
+    //     }
+    //     next();
+    //   })();
+    // }
     else if(to.name === "Detail"){
     (async function(){
       // console.log(to);
@@ -43,7 +63,6 @@ router.beforeEach((to, from, next) => {
       // console.log(store.getters.isSuperAdmin);
       const data = Object.entries(store.state.board);
       // console.log(data);
-      // console.log(store.state.user.profile.id);
       // console.log(data[0][1].created_by);
       // 유저 아이디와 비교 + isSuperAdmin일떄 next
       // if(data[1].id )
@@ -65,12 +84,15 @@ router.beforeEach((to, from, next) => {
 
     })();
     }
+
      else {
       //  console.log(to);
       //  조건 board의 flag를 가져와야 한다.
       //  console.log(store.state)
       next()
     }
+
+    
   } else {
     next()
   }

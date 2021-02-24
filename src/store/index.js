@@ -5,6 +5,9 @@ import contest from './modules/contest'
 import board from './modules/board'
 import api from '@oj/api'
 import types from './types'
+import createPersistedState from 'vuex-persistedstate';
+
+
 
 Vue.use(Vuex)
 const debug = process.env.NODE_ENV !== 'production'
@@ -66,6 +69,9 @@ export default new Vuex.Store({
     contest,
     board
   },
+  plugins: [
+    createPersistedState()
+  ],
   state: rootState,
   getters: rootGetters,
   mutations: rootMutations,

@@ -87,16 +87,16 @@
         </Menu-item>
       </Submenu>
 
-      <Submenu name="board" v-if="isSuperAdmin || user['email'] !== undefined && (checkEmail(user['email']) === 'SAMSUNG') || user['email'] !== undefined && (checkEmail(user['email']) === 'MIRACOM')">
+      <Submenu name="board" v-if="isSuperAdmin || user['email'] !== undefined && (checkEmail(user['email']) === 'SAMSUNG') ||checkMiracom(user['username'])">
         <template slot="title">
           <Icon type="ios-contact"></Icon>
           <span class="menu-title">{{$t('질문게시판')}}</span>
         </template>
-      <Menu-item name="/board" v-if=" isSuperAdmin || user['email'] !== undefined && (checkEmail(user['email']) === 'SAMSUNG')">
+      <Menu-item name="/board" v-if=" isSuperAdmin || (checkBelong(userinfo['github']) === 'SDS') && user['email'] !== undefined && (checkEmail(user['email']) === 'SAMSUNG')">
         <Icon type="ios-contact"></Icon>
         <span class="board">SDS 전용</span>
       </Menu-item>
-      <Menu-item name="/board-miracom"  v-if=" isSuperAdmin || user['email'] !== undefined && (checkEmail(user['email']) === 'MIRACOM')">
+      <Menu-item name="/board-miracom"  v-if=" isSuperAdmin || checkMiracom(user['username']) && (checkBelong(userinfo['github']) === 'MIRACOM')">
         <Icon type="ios-contact"></Icon>
         <span class="board">미라콤 전용</span>
       </Menu-item>
@@ -105,6 +105,9 @@
         <span class="board">강사 전용</span>
       </Menu-item>
       </Submenu>
+
+      <!-- {{user['username']}} -->
+      <!-- {{userinfo}} -->
      
       <template v-if="!isAuthenticated">
         <div class="btn-menu">
@@ -157,10 +160,13 @@
     },
     mounted () {
       this.getProfile()
-      // console.log(this.$router)
+      // let belong = this.$store.state['user'].profile['github']
+      // console.log(profile)
+      // console.log(this.user)
+      // this.checkBelong(belong)
     },
     computed:{
-      ...mapState(["user"])
+      ...mapState(["user"]),
     },
     methods: {
       ...mapActions(['getProfile', 'changeModalStatus']),
@@ -193,10 +199,23 @@
         }
         return 0
         //samsung 포함
+      },
+      checkBelong(belong){
+        // console.log(belong)
+        if(belong === null) return false;
+        //소속을 확인해서 대문자로 변경하여 리턴시켜준다
+        return belong.toUpperCase();
+      },
+      checkMiracom(id){
+        if(id === undefined) return 0
+        //뒤 식별자7개를 가져와서 숫자가 아니면 미라콤이 아님
+        if(Number(id.slice(-7)) === typeof 1) return 0
+        // 아이디가 15글자면서,miracom_ 들어가야된다
+        if(id.length === 15 && id.indexOf('miracom_') !== -1) return 1;
       }
     },
     computed: {
-      ...mapGetters(['website', 'modalStatus', 'user', 'isAuthenticated', 'isAdminRole', 'isSuperAdmin']),
+      ...mapGetters(['website', 'modalStatus', 'user', 'isAuthenticated', 'isAdminRole', 'isSuperAdmin', 'userinfo']),
       
       activeMenu () {
         return '/' + this.$route.path.split('/')[1]

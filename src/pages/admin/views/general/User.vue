@@ -38,6 +38,12 @@
           </template>
         </el-table-column>
 
+        <el-table-column prop="school" label="소속코드">
+          <template slot-scope="scope">
+            {{scope.row.github }}
+          </template>
+        </el-table-column>
+
         <el-table-column prop="admin_type" label="분류">
           <template slot-scope="scope">
             {{ scope.row.admin_type }}
@@ -311,6 +317,7 @@
       openUserDialog (id) {
         this.showUserDialog = true
         api.getUser(id).then(res => {
+          console.log(res.data.data)
           this.user = res.data.data
           this.user.password = ''
           this.user.real_tfa = this.user.two_factor_auth
@@ -322,6 +329,7 @@
         api.getUserList((page - 1) * this.pageSize, this.pageSize, this.keyword).then(res => {
           this.loadingTable = false
           this.total = res.data.data.total
+          // console.log(res.data.data.results);
           this.userList = res.data.data.results
         }, res => {
           this.loadingTable = false

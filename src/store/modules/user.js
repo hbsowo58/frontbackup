@@ -10,6 +10,8 @@ const state = {
 
 const getters = {
   user: state => state.profile.user || {},
+  userinfo: state => state.profile,
+  userinfonum: state => state.profile.github,
   profile: state => state.profile,
   isAuthenticated: (state, getters) => {
     return !!getters.user.id
