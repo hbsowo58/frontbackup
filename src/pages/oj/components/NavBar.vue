@@ -87,16 +87,26 @@
         </Menu-item>
       </Submenu>
 
-      <Submenu name="board" v-if="isSuperAdmin || user['email'] !== undefined && (checkEmail(user['email']) === 'SAMSUNG') ||checkMiracom(user['username'])">
+      <Menu-item name="/board-miracom" v-if="isValidMiracom()==true">
+        <Icon type="ios-contact"></Icon>
+        <span class="menu-title">{{$t('질문게시판')}}</span>
+      </Menu-item>
+
+      <Menu-item name="/board" v-else-if="isValidSDS()">
+        <Icon type="ios-contact"></Icon>
+        <span class="menu-title">{{$t('질문게시판')}}</span>
+      </Menu-item>
+
+      <Submenu name="board" v-else-if="isSuperAdmin">
         <template slot="title">
           <Icon type="ios-contact"></Icon>
           <span class="menu-title">{{$t('질문게시판')}}</span>
         </template>
-      <Menu-item name="/board" v-if=" isSuperAdmin || (checkBelong(userinfo['github']) === 'SDS') && user['email'] !== undefined && (checkEmail(user['email']) === 'SAMSUNG')">
+      <Menu-item name="/board">
         <Icon type="ios-contact"></Icon>
         <span class="board">SDS 전용</span>
       </Menu-item>
-      <Menu-item name="/board-miracom"  v-if=" isSuperAdmin || checkMiracom(user['username']) && (checkBelong(userinfo['github']) === 'MIRACOM')">
+      <Menu-item name="/board-miracom">
         <Icon type="ios-contact"></Icon>
         <span class="board">미라콤 전용</span>
       </Menu-item>
@@ -105,9 +115,6 @@
         <span class="board">강사 전용</span>
       </Menu-item>
       </Submenu>
-
-      <!-- {{user['username']}} -->
-      <!-- {{userinfo}} -->
      
       <template v-if="!isAuthenticated">
         <div class="btn-menu">
@@ -160,10 +167,6 @@
     },
     mounted () {
       this.getProfile()
-      // let belong = this.$store.state['user'].profile['github']
-      // console.log(profile)
-      // console.log(this.user)
-      // this.checkBelong(belong)
     },
     computed:{
       ...mapState(["user"]),
@@ -188,30 +191,40 @@
           mode: mode
         })
       },
-      checkEmail (email) {
-        if (email === null) return 1
-        //root
-        if(email.indexOf('samsung') > 1){
-          return 'SAMSUNG'
-        }
-        if(email.indexOf('miracom.co.kr') > 1){
-          return 'MIRACOM'
-        }
-        return 0
-        //samsung 포함
-      },
-      checkBelong(belong){
-        // console.log(belong)
+      isValidSDS () {
+        let belong = this.$store.state['user'].profile['github'];
+        let email = this.user['email'];
+
+        if(belong === undefined) return false;
         if(belong === null) return false;
-        //소속을 확인해서 대문자로 변경하여 리턴시켜준다
-        return belong.toUpperCase();
+        if(email === undefined) return false;
+        if(email === null) return false;
+
+        belong = belong.toUpperCase();
+        email = email.toLowerCase();
+
+        if(belong !== 'SDS') return false;
+        if(email.indexOf("@samsung.") === -1) return false;
+
+        return true;
       },
-      checkMiracom(id){
-        if(id === undefined) return 0
-        //뒤 식별자7개를 가져와서 숫자가 아니면 미라콤이 아님
-        if(Number(id.slice(-7)) === typeof 1) return 0
-        // 아이디가 15글자면서,miracom_ 들어가야된다
-        if(id.length === 15 && id.indexOf('miracom_') !== -1) return 1;
+      isValidMiracom(){
+        let id = this.user['username'];
+        let belong = this.$store.state['user'].profile['github'];
+
+        if(id === null) return false;
+        if(id === undefined) return false;
+        if(belong === null) return false;
+        if(belong === undefined) return false;
+        
+        id = id.toLowerCase();
+        belong = belong.toUpperCase();
+
+        if(belong !== 'MIRACOM') return false;
+        if(id.length !== 15) return false;
+        if(id.slice(0,8) !== 'miracom_') return false;
+        if(!isNaN(id.slice(-7)) === false) return false;
+        return true;
       }
     },
     computed: {

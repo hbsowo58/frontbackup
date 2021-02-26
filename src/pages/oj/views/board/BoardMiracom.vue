@@ -10,14 +10,19 @@ import {mapGetters, mapState, mapActions} from 'vuex'
 export default {
   components: { ReadMiracom },
   name: 'Board-miracom',
-    created(){
-    // console.log(this.$store.getters.isSuperAdmin)
-    const check = this.$store.getters.userinfonum;
+  //   created(){
+  //   // console.log(this.$store.getters.isSuperAdmin)
+  //   const check = this.$store.getters.userinfonum;
 
-    console.log(check)
-    if(!check.includes('MIRACOM')){
-      alert("접근이 금지된 게시판입니다.")
-      this.$router.push("/")
+  //   console.log(check)
+  //   if(!check.includes('MIRACOM')){
+  //     alert("접근이 금지된 게시판입니다.")
+  //     this.$router.push("/")
+  //   }
+  // },
+  created(){
+    if(this.isSuperAdmin === false && this.isValidMiracom() === false){
+      this.$router.push("/");
     }
   },
   mounted(){
@@ -35,6 +40,25 @@ export default {
   },
   methods: {
     ...mapActions(['getProfile', 'changeModalStatus']),
+    isValidMiracom(){
+      let id = this.user['username'];
+      let belong = this.$store.state['user'].profile['github'];
+      console.log(id,belong)
+
+      if(id === null) return false;
+      if(id === undefined) return false;
+      if(belong === null) return false;
+      if(belong === undefined) return false;
+      
+      id = id.toLowerCase();
+      belong = belong.toUpperCase();
+
+      if(belong !== 'MIRACOM') return false;
+      if(id.length !== 15) return false;
+      if(id.slice(0,8) !== 'miracom_') return false;
+      if(!isNaN(id.slice(-7)) === false) return false;
+      return true;
+    }
   },
   data () {
     return {
