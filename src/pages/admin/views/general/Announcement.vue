@@ -96,7 +96,7 @@
       <span slot="footer" class="dialog-footer">
           <cancel @click.native="showEditAnnouncementDialog = false"></cancel>
           <save type="primary" @click.native="submitAnnouncement"></save>
-        </span>
+      </span>
     </el-dialog>
   </div>
 </template>
