@@ -266,15 +266,15 @@ export default [
     component: NoticeBoard
   },
   {
-    path: '/notice/board-miracom/:board_id',
-    name: 'Board_miracom_detail',
+    path: '/notice-miracom/:board_id',
+    name: 'Notice-miracom_detail',
     meta: {requiresAuth: true, title: 'miacom_Detail'},
     component: NoticeDetailMiracom
   },
   {
-    path: '/noticeBoardMiracom',
-    name: 'Board-miracom',
-    meta: {requiresAuth: true, title: 'Board-miracom'},
+    path: '/notice-miracom',
+    name: 'Notice-miracom',
+    meta: {requiresAuth: true, title: 'Notice-miracom'},
     component: NoticeBoardMiracom
   },
 

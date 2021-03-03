@@ -469,12 +469,15 @@
           return
         }
         let fileList = response.data.info
+        let oneScore = (100 / fileList.length).toFixed(0)
         for (let file of fileList) {
-          file.score = (100 / fileList.length).toFixed(0)
+          file.score = oneScore
           if (!file.output_name && this.problem.spj) {
             file.output_name = '-'
           }
         }
+        fileList[0].score = 100 - ((fileList.length - 1) * oneScore)
+
         this.problem.test_case_score = fileList
         this.testCaseUploaded = true
         this.problem.test_case_id = response.data.id

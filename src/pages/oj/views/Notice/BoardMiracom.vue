@@ -9,7 +9,7 @@ import ReadMiracom from './ReadMiracom.vue'
 import {mapGetters, mapState, mapActions} from 'vuex'
 export default {
   components: { ReadMiracom },
-  name: 'Board-miracom',
+  name: 'Notice-miracom',
   //   created(){
   //   // console.log(this.$store.getters.isSuperAdmin)
   //   const check = this.$store.getters.userinfonum;
