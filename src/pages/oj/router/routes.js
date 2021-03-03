@@ -291,9 +291,9 @@ export default [
     component: NoticeReadMiracom
   },
   {
-    path: '/notice/create/:board_id?',
-    name: 'Create',
-    meta: {title: 'Create'},
+    path: '/notice-create/:board_id?',
+    name: 'NoticeCreate',
+    meta: {title: 'NoticeCreate'},
     component: NoticeCreate
   },
   {

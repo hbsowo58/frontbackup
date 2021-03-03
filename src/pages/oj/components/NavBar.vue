@@ -116,16 +116,16 @@
       </Menu-item>
       </Submenu>
 
-      <Submenu name="notice">
+      <Submenu name="notice" v-if="isSuperAdmin || isValidMiracom()==true || isValidSDS()">
         <template slot="title">
           <Icon type="ios-contact"></Icon>
           <span class="menu-title">{{$t('공지사항')}}</span>
         </template>
-      <Menu-item name="/notice">
+      <Menu-item name="/notice" v-if="isSuperAdmin || isValidSDS()">
         <Icon type="ios-contact"></Icon>
         <span class="board">SDS 전용</span>
       </Menu-item>
-      <Menu-item name="/noticeBoardMiracom">
+      <Menu-item name="/noticeBoardMiracom" v-if="isSuperAdmin || isValidMiracom()">
         <Icon type="ios-contact"></Icon>
         <span class="board">미라콤 전용</span>
       </Menu-item>

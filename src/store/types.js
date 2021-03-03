@@ -13,7 +13,6 @@ export default keyMirror({
   'CHANGE_PROFILE': null,
   'CHANGE_MODAL_STATUS': null,
   'UPDATE_WEBSITE_CONF': null,
-
   'NOW': null,
   'NOW_ADD_1S': null,
   'CHANGE_CONTEST': null,
@@ -23,5 +22,6 @@ export default keyMirror({
   'CHANGE_CONTEST_RANK_LIMIT': null,
   'CONTEST_ACCESS': null,
   'CLEAR_CONTEST': null,
-  'POST_COMMENT': null
+  'POST_NOTICE_COMMENT': null,
+  'POST_COMMENT': null,
 })

@@ -36,7 +36,7 @@ export default {
     // console.log(this.profile);
   },
   methods: {
-    ...mapActions(["getBoard"]),
+    ...mapActions(["getBoard","getNotice"]),
     async noticepostComment() {
       if (!this.input.trim().length) {
         this.$error("댓글을 입력해주세요");
@@ -46,8 +46,9 @@ export default {
       let str = this.input.replace(/ /g, "\u00a0");
       str = str.replace(/(?:\r\n|\r|\n)/g, "<br/>");
       const parameter = this.$route.params["board_id"];
+      console.log(str, parameter, this.user.profile.user.id, this.checked ? "secret" : "")
       await api.noticepostComment(str, parameter, this.user.profile.user.id, this.checked ? "secret" : "");
-      this.getBoard(this.$route.params["board_id"]);
+      this.getNotice(this.$route.params["board_id"]);
       this.input = "";
     }
   }

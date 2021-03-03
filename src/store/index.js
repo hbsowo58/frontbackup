@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import user from './modules/user'
 import contest from './modules/contest'
 import board from './modules/board'
+import notice from './modules/notice'
 import api from '@oj/api'
 import types from './types'
 import createPersistedState from 'vuex-persistedstate';
@@ -67,7 +68,8 @@ export default new Vuex.Store({
   modules: {
     user,
     contest,
-    board
+    board,
+    notice
   },
   plugins: [
     createPersistedState()

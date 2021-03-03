@@ -11,7 +11,7 @@
         <el-table-column prop="id" align="center" width="140px">
         </el-table-column>
 
-        <el-table-column prop="title" label="제목" align="left">
+        <el-table-column prop="title" label="제목" align="center">
           <template slot-scope="scope">
             <span
               style="padding-left:30px;"
@@ -63,12 +63,12 @@
 
     <el-footer>
       <div class="page-wrapper">
-        <el-button type="primary" @click="write">글쓰기</el-button>
+        <el-button type="primary" @click="write">공지사항 작성</el-button>
         <div class="serach-wrapper">
           <el-input
             v-model="keyword"
             prefix-icon="el-icon-search"
-            placeholder="제목 / 내용 / 이름 검색"
+            placeholder="제목 / 작성자 검색"
           ></el-input>
           <el-button type="primary" @click="getNoticeList">검색</el-button>
         </div>
@@ -124,36 +124,28 @@ export default {
         keyword: this.keyword,
         company: "SDS"
       });
-      // const data = Object.entries(response).find(el => el[0] === "data");
       const data = Object.entries(response).find(el => el[0] === "data");
-      // console.log('리스폰스얌', data)
       this.total = data[1]["data"]["total"];
       const result = data[1]["data"]["results"];
       this.data = result;
+      // 210303 게시글 
     },
     write() {
       this.$router.push({
-        path: "create"
+        path: "notice-create"
       });
     },
     detail(id, column, cell, event) {
-      // console.log(column.property);
-
       if (
         this.isSuperAdmin ||
         (this.user.profile.user &&
           id.created_by === this.user.profile.user.id) ||
         (id.flag !== 3 && column.property === "title")
       ) {
-        this.$router.push(`/board/${id.id}`);
+        this.$router.push(`/notice/${id.id}`);
       }
-      // console.log(id);
-      // console.log(column);
-      // console.log(cell);
-      // console.log(event);
     },
     getCommentCount(commentList) {
-      console.log('hello wolrd', commentList)
       return commentList.filter(li => li.flag !== 4).length;
     }
   }

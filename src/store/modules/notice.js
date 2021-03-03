@@ -10,19 +10,21 @@ const state = {
 const getters = {};
 
 const mutations = {
-  [types.POST_COMMENT](state, payload) {
+  [types.POST_NOTICE_COMMENT](state, payload) {
     state.notice = payload;
   }
 };
 
 const actions = {
   async getNotice({ commit }, payload) {
+    
     // console.log(payload)
     const response = await api.getNoticeDetail(payload);
+    // console.log(response)
     const result = Object.entries(response).find(el => el[0] === 'data');
     // console.log(result[1]['data']);
     // console.log(result['data']);
-    commit(types.POST_COMMENT, result[1]['data']);
+    commit(types.POST_NOTICE_COMMENT, result[1]['data']);
   }
 };
 

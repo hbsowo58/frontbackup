@@ -312,11 +312,41 @@ export default {
       }
     })
   },
+  // 0303추가
+  postNotice(title, content, created_by_id, type, company){
+    return ajax('notice', 'post',{
+      data:{
+        title,
+        content,
+        created_by_id,
+        type,
+        company
+      }
+    })
+  },
   putBoard(title, content, parameter){
     return ajax('board', 'put', {
       data: {
         title,
         content,
+        board_id: parameter
+      }
+    })
+  },
+  // 0303추가
+  putNotice(title, content, parameter){
+    return ajax('notice', 'put', {
+      data: {
+        title,
+        content,
+        board_id: parameter
+      }
+    })
+  },
+  // 0303추가
+  deleteNotice(parameter){
+    return ajax('notice', 'delete', {
+      params: {
         board_id: parameter
       }
     })
@@ -365,8 +395,33 @@ export default {
       }
     })
   },
+  // 210303추가
+  putNoticeComment(comment_id,comment){
+    return ajax('notice-comment', 'put', {
+      data: {
+        comment_id,
+        comment
+      }
+    })
+  },
   deleteComment(comment_id){
     return ajax('comment', 'delete', {
+      params: {
+        comment_id
+      }
+    })
+  },
+  // 210303 추가
+  deleteNoticeComment(comment_id){
+    return ajax('notice-comment', 'delete', {
+      params: {
+        comment_id
+      }
+    })
+  },
+  // 0303 추가
+  deleteNoitceComment(comment_id){
+    return ajax('notice-comment', 'delete', {
       params: {
         comment_id
       }
@@ -383,8 +438,27 @@ export default {
     })
   },
 
+  // 210303 추가
+  secretNotice(board_id, type){
+    return ajax('notice-secret', 'put', {
+      data:{
+        board_id,
+        type
+      }
+    })
+  },
+
   secretComment(comment_id, type){
     return ajax('comment-secret', 'put', {
+      data:{
+        comment_id,
+        type
+      }
+    })
+  },
+  // 210303추가
+  secretNoticeComment(comment_id, type){
+    return ajax('notice-comment-secret', 'put', {
       data:{
         comment_id,
         type
