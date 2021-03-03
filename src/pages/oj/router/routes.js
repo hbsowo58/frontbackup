@@ -28,6 +28,15 @@ import CreateMiracom from '../views/board/CreateMiracom.vue'
 import Detail from '../views/board/Detail.vue'
 import DetailMiracom from '../views/board/DetailMiracom.vue'
 
+import NoticeBoard from '../views/Notice/Board.vue'
+import NoticeBoardMiracom from '../views/Notice/BoardMiracom'
+import NoticeRead from '../views/Notice/Read.vue'
+import NoticeReadMiracom from '../views/Notice/ReadMiracom.vue'
+import NoticeCreate from '../views/Notice/Create.vue'
+import NoticeCreateMiracom from '../views/Notice/CreateMiracom.vue'
+import NoticeDetail from '../views/Notice/Detail.vue'
+import NoticeDetailMiracom from '../views/Notice/DetailMiracom.vue'
+
 import * as Contest from '@oj/views/contest'
 import * as Setting from '@oj/views/setting'
 
@@ -243,6 +252,55 @@ export default [
     name: 'java',
     meta: {title: 'Java'},
     component: Java
+  },
+  {
+    path: '/notice/:board_id',
+    name: 'Detail',
+    meta: {requiresAuth: true, title: 'Detail'},
+    component: NoticeDetail
+  },
+  {
+    path: '/notice',
+    name: 'Board',
+    meta: {requiresAuth: true, title: 'Board'},
+    component: NoticeBoard
+  },
+  {
+    path: '/notice/board-miracom/:board_id',
+    name: 'Board_miracom_detail',
+    meta: {requiresAuth: true, title: 'miacom_Detail'},
+    component: NoticeDetailMiracom
+  },
+  {
+    path: '/noticeBoardMiracom',
+    name: 'Board-miracom',
+    meta: {requiresAuth: true, title: 'Board-miracom'},
+    component: NoticeBoardMiracom
+  },
+
+  {
+    path: '/notice/read',
+    name: 'Read',
+    meta: {title: 'Read'},
+    component: NoticeRead
+  },
+  {
+    path: '/notice/read_miracom',
+    name: 'Read_miracom',
+    meta: {title: 'Read_miracom'},
+    component: NoticeReadMiracom
+  },
+  {
+    path: '/notice/create/:board_id?',
+    name: 'Create',
+    meta: {title: 'Create'},
+    component: NoticeCreate
+  },
+  {
+    path: '/notice/create-miracom/:board_id?',
+    name: 'Create-miracom',
+    meta: {title: 'Create_miracom'},
+    component: NoticeCreateMiracom
   },
   {
     path: '*',

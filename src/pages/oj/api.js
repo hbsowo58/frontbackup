@@ -276,18 +276,32 @@ export default {
       params
     })
   },
+  // 210302추가
+  getNoticeList (params) {
+    // params.limit = limit
+    // params.offset = offset
+    return ajax('notice-list', 'get', {
+      params
+    })
+  },
   
   getBoardDetail(params){
-    // console.log(params);
-    
     return ajax('board', 'get', {
       params: {
         board_id: params
       }
     })
   },
-  postBoard(title, content, created_by_id, type, company){
 
+  // 0302추가
+  getNoticeDetail(params){
+    return ajax('notice', 'get', {
+      params: {
+        board_id: params
+      }
+    })
+  },
+  postBoard(title, content, created_by_id, type, company){
     return ajax('board', 'post',{
       data:{
         title,
@@ -314,8 +328,27 @@ export default {
       }
     })
   },
+  // 210302추가
+  deleteNotice(parameter){
+    return ajax('notice', 'delete', {
+      params: {
+        board_id: parameter
+      }
+    })
+  },
   postComment(comment, board_id, created_by_id, type){
     return ajax('comment', 'post',{
+      data:{
+        comment,
+        board_id,
+        created_by_id,
+        type
+      }
+    })
+  },
+  // 210302 추가
+  noticepostComment(comment, board_id, created_by_id, type){
+    return ajax('notice-comment', 'post',{
       data:{
         comment,
         board_id,

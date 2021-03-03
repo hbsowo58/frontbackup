@@ -115,7 +115,22 @@
         <span class="board">강사 전용</span>
       </Menu-item>
       </Submenu>
-     
+
+      <Submenu name="notice">
+        <template slot="title">
+          <Icon type="ios-contact"></Icon>
+          <span class="menu-title">{{$t('공지사항')}}</span>
+        </template>
+      <Menu-item name="/notice">
+        <Icon type="ios-contact"></Icon>
+        <span class="board">SDS 전용</span>
+      </Menu-item>
+      <Menu-item name="/noticeBoardMiracom">
+        <Icon type="ios-contact"></Icon>
+        <span class="board">미라콤 전용</span>
+      </Menu-item>
+      </Submenu>
+
       <template v-if="!isAuthenticated">
         <div class="btn-menu">
           <Button type="ghost"

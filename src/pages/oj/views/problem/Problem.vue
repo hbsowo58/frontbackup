@@ -406,9 +406,18 @@
             console.log("GETSUB")
             this.result = res.data.data
             console.log(this.result)
+            console.log(this.result.info)
+            console.log(this.result.info.data)
+            
+            //-2일때 컴파일 에러 
+            // -1일때 오답
+            // 8일때 부분정답
             //써먹을만한 것 this.result.code, 
-            if(this.result && this.result.result === -1){
-              // alert("왓더 풕")
+            if(this.result && (this.result.result === -1 || this.result.result === 8)){
+              for(let data of this.result.info.data){
+                // 해당 경우에서만 DB에 넣는다 +
+              // console.log(data);
+            }  
               
             }
             if (Object.keys(res.data.data.statistic_info).length !== 0) {
