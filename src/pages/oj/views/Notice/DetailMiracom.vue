@@ -4,26 +4,26 @@
     <el-container>
       <el-header>
         <!-- Q&A -->
-        <div class="detail_title">질문게시판</div>
+        <div class="detail_title">공지사항</div>
         <div class="detail-header-wrapper">
-          <div></div>
+          <!-- <div>{{notice}}</div> -->
           <div
-            v-if="board['board'].flag === 3"
+            v-if="notice.notice.flag === 3"
             class="detail_title"
             style="text-align:center;margin-left: 15%;"
           >
-            {{ board["board"].title }} 🔒
+            {{ notice["notice"].title }} 🔒
           </div>
           <div
             v-else
             class="detail_title"
             style="text-align:center;margin-left: 15%;"
           >
-            {{ board["board"].title }}
+            {{ notice["notice"].title }}
           </div>
           <div class="detail_subtitle">
-            <span> 작성자 : {{ board["board"].real_name }} </span>
-            <span> 작성일 : {{ toLocal(board["board"].created_time) }} </span>
+            <span> 작성자 : {{ notice.notice.real_name }} </span>
+            <span> 작성일 : {{ toLocal(notice.notice.created_time) }} </span>
             <!-- <span> 조회(임시) </span> <span> 댓글(임시) </span> -->
           </div>
         </div>
@@ -39,39 +39,39 @@
               v-if="
                 isSuperAdmin ||
                   (user.profile.user &&
-                    user.profile.user.id === board['board'].created_by)
+                    user.profile.user.id === notice.notice.created_by)
               "
               >수정</el-button
             >
 
             <el-button
-              @click="secretBoard(board['board'].flag);"
+              @click="secretBoard(notice.notice.flag);"
               v-if="
                 isSuperAdmin ||
                   (user.profile.user &&
-                    user.profile.user.id === board['board'].created_by)
+                    user.profile.user.id === notice.notice.created_by)
               "
             >
-              <span v-if="board['board'].flag == 3"> 공개 </span>
+              <span v-if="notice.notice.flag === 3"> 공개 </span>
               <span v-else> 비공개 </span>
             </el-button>
 
             <el-button
-              @click="deleteBoard"
+              @click="deleteNotice"
               v-if="
                 isSuperAdmin ||
                   (user.profile.user &&
-                    user.profile.user.id === board['board'].created_by)
+                    user.profile.user.id === notice.notice.created_by)
               "
               >삭제</el-button
             >
           </div>
-          <p v-html="board['board'].content"></p>
+          <p v-html="notice.notice.content"></p>
         </div>
       </el-main>
       <el-footer>
         <div
-          v-for="c in board['board'].comments"
+          v-for="c in notice.notice.comments"
           :key="c.id"
           class="detail_comment"
         >
@@ -153,18 +153,19 @@
 
             <div
               v-if="
-                c.flag === 3 &&
+                c.flag == 3 &&
                   (isSuperAdmin || c.created_by === user.profile.user.id)
               "
               v-html="c.comment"
             >
               🔒
             </div>
-            <div v-else-if="c.flag === 3">비공개 댓글입니다. 🔒</div>
+            <div v-else-if="c.flag == 3">비공개 댓글입니다. 🔒</div>
             <div v-else v-html="c.comment"></div>
           </div>
         </div>
-        <Comment />
+        <!-- 210303 댓글삭제 -->
+        <!-- <Comment /> -->
       </el-footer>
     </el-container>
   </div>
@@ -193,78 +194,56 @@ export default {
   },
   computed: {
     ...mapGetters(["isSuperAdmin"]),
-    ...mapState(["board", "user"])
+    ...mapState(["board", "user", "notice"])
   },
   async mounted() {
-    // this.getBoard(this.$route.params["board_id"]);
-    // console.log(time);
-    // await this.getData();
-    const reuslt = await this.getBoard(this.$route.params["board_id"]);
-    // console.log(this.board.board);
-    // api.postBoard("치킨","jmt", loginId);
-    // const test1 = await api.putBoard("믿고있었다고", "젠장!!!",parameter);
-    // console.log(test1);
-    // const test2 = await api.deleteBoard(parameter)
-    // console.log(test2);
-    // const test3 = await api.postComment("온유씨", parameter, loginId);
-    // console.log(test3);
-    // const test4 = await api.putComment(2, "응 아니야~")
-    // console.log(test4)
-    // const test5 = await api.deleteComment('2')
-    // console.log(test5)
-    // console.log(this.board);
+    await this.getNotice(this.$route.params["board_id"]);
+    // console.log(this.notice.notice.comments)
+    // console.log(reuslt)
   },
   methods: {
-    ...mapActions(["getBoard"]),
-    
+      ...mapActions(["getBoard","getNotice"]),
 
     toLocal(data) {
       const result = time.utcToLocal(data, "YYYY년 M월 D일 HH시 mm분");
 
       return result;
     },
-    // ...mapMutations(['POST_COMMENT']),
     async getData() {
       const parameter = this.$route.params["board_id"];
-      // console.log(parameter);
-      // this.postBoard(parameter);
-      // const response = await api.getBoardDetail(parameter);
-      // const data = Object.entries(response).find(el => el[0] === "data");
-      // const result = data[1]["data"];
-      // console.log(result);
-      // this.POST_COMMENT(result);
     },
-    deleteBoard() {
+    deleteNotice() {
+      console.log('hi')
       this.$Modal.confirm({
         content: "게시글을 삭제하시겠습니까?",
         onOk: async () => {
-          await api.deleteBoard(this.$route.params["board_id"]);
+          await api.deleteNotice(this.$route.params["board_id"]);
           this.$router.push({
-            path: "/board-miracom"
+            path: "/notice-miracom"
           });
         },
         onCancel: () => {}
       });
     },
     updateData() {
-      this.$router.push(`/create-miracom/${this.$route.params["board_id"]}`);
+      this.$router.push(`/notice-create-miracom/${this.$route.params["board_id"]}`);
     },
     list() {
       this.$router.push({
-        path: "/board-miracom"
+        path: "/notice-miracom"
       });
     },
     write() {
       this.$router.push({
-        path: "/create-miracom"
+        path: "/notice-create-miracom"
       });
     },
     deleteComment(id) {
       this.$Modal.confirm({
         content: "댓글을 삭제하시겠습니까?",
         onOk: async () => {
-          const hello1 = await api.deleteComment(id);
-          const reuslt = await this.getBoard(this.$route.params["board_id"]);
+          await api.deleteNoitceComment(id);
+          await this.getNotice(this.$route.params["board_id"]);
         },
         onCancel: () => {}
       });
@@ -286,8 +265,8 @@ export default {
       this.$Modal.confirm({
         content: "댓글을 수정하시겠습니까?",
         onOk: async () => {
-          await api.putComment(comment_id, str);
-          const reuslt = await this.getBoard(this.$route.params["board_id"]);
+          await api.putNoticeComment(comment_id, str);
+          await this.getNotice(this.$route.params["board_id"]);
           this.flag = false;
           this.comment = "";
           this.commentIndex = "";
@@ -305,8 +284,9 @@ export default {
           type === "normal" ? "공개" : "비공개"
         } 처리 하시겠습니까?`,
         onOk: async () => {
-          await api.secretBoard(this.$route.params["board_id"], type);
-          const reuslt = await this.getBoard(this.$route.params["board_id"]);
+          await api.secretNotice(this.$route.params["board_id"], type);
+          await this.getNotice(this.$route.params["board_id"]);
+          // console.log(result)
         },
         onCancel: () => {}
       });
@@ -315,13 +295,14 @@ export default {
       let type = "";
       if (flag === 3) type = "normal";
       else type = "secret";
+      // console.log(id,type)
       this.$Modal.confirm({
         content: `해당 댓글을 ${
           type === "normal" ? "공개" : "비공개"
         } 처리 하시겠습니까?`,
         onOk: async () => {
-          await api.secretComment(id, type);
-          const reuslt = await this.getBoard(this.$route.params["board_id"]);
+          await api.secretNoticeComment(id, type);
+          await this.getNotice(this.$route.params["board_id"]);
         },
         onCancel: () => {}
       });

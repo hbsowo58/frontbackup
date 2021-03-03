@@ -110,7 +110,7 @@
         <Icon type="ios-contact"></Icon>
         <span class="board">미라콤 전용</span>
       </Menu-item>
-      <Menu-item name="/" disabled>
+      <Menu-item name="/professor">
         <Icon type="ios-contact"></Icon>
         <span class="board">강사 전용</span>
       </Menu-item>
@@ -125,7 +125,7 @@
         <Icon type="ios-contact"></Icon>
         <span class="board">SDS 전용</span>
       </Menu-item>
-      <Menu-item name="/noticeBoardMiracom" v-if="isSuperAdmin || isValidMiracom()">
+      <Menu-item name="/notice-miracom" v-if="isSuperAdmin || isValidMiracom()">
         <Icon type="ios-contact"></Icon>
         <span class="board">미라콤 전용</span>
       </Menu-item>

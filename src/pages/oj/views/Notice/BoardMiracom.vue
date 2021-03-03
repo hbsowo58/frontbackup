@@ -33,6 +33,7 @@ export default {
     // console.log(this.user)
     // console.log(this.isSuperAdmin)
     // console.log(this.userinfo)
+    console.log('heelo')
   },
   computed:{
   ...mapState(['user']),

@@ -1,9 +1,9 @@
 <template>
   <el-container style="background:white; padding: 0 20%;">
     <el-header>
-      <div class="detail_title">게시글 작성</div>
+      <div class="detail_title">공지사항 작성</div>
       <el-input v-model="title" placeholder="제목을 입력해주세요" />
-      <el-checkbox v-model="checked" class="secret-checkbox">비밀글로 작성하기</el-checkbox>
+      <!-- <el-checkbox v-model="checked" class="secret-checkbox">비밀공지로 변경하기</el-checkbox> -->
     </el-header>
     <el-main>
       <Simditor  v-model="content" placeholder=""></Simditor>
@@ -24,7 +24,7 @@ import api from "@oj/api";
 import data from "../data";
 import { mapActions, mapGetters, mapState } from "vuex";
 export default {
-  name: "Create_miracom",
+  name: "CreateMiracom",
   components: {
     Simditor
   },
@@ -41,35 +41,36 @@ export default {
     };
   },
   computed: {
-    ...mapState(["board", "user"]),
+    ...mapState(["board", "user", "notice"]),
     ...mapGetters(["isSuperAdmin"])
   },
   async mounted() {
-    
     if (this.$route.params["board_id"]) {
       // console.log(this.board);
       this.index = this.$route.params["board_id"];
-      await this.getBoard(this.$route.params["board_id"]);
-      // console.log(this.user);
+      await this.getNotice(this.$route.params["board_id"]);
+      // console.log(this.board);
+      // console.log(this.user.profile.user.id);
+      // console.log(this.notice.notice);
       // console.log(this.board.board.created_by);
       // console.log(this.user.profile.user.id);
       // console.log(this.board);
-      this.title = this.board.board.title;
-      this.content = this.board.board.content;
+      this.title = this.notice.notice.title;
+      this.content = this.notice.notice.content;
       // console.log(this.isSuperAdmin);
       if (
         !this.isSuperAdmin &&
-        this.board.board.created_by !== this.user.profile.user.id
+        this.notice.notice.created_by !== this.user.profile.user.id
       ) {
         this.$router.push({
-          path: "/board-miracom"
+          path: "/notice-miracom"
         });
       }
     }
     // 수정글 작성시 해당 로그인 권한과 맞춰서 권한이 맞지 않을경우 수정이 불가능하게 한다
   },
   methods: {
-    ...mapActions(["getBoard"]),
+    ...mapActions(["getBoard","getNotice"]),
     async write() {
       if (
         this.title.length > 0 &&
@@ -77,7 +78,7 @@ export default {
         this.content.length > 0 &&
         this.content.length < 1000000
       ) {
-        await api.postBoard(
+        await api.postNotice(
           this.title,
           this.content,
           this.user.profile.user.id,
@@ -85,7 +86,7 @@ export default {
           this.company
         );
         this.$router.push({
-          path: "/board-miracom"
+          path: "/notice-miracom"
         });
       } else if (this.title.length === 0) {
         this.$error("제목을 입력해주세요");
@@ -110,11 +111,11 @@ export default {
         this.content.length < 1000000
       ) {
         this.$Modal.confirm({
-          content: "게시글 수정을 하시겠습니까?",
+          content: "공지사항을 수정 하시겠습니까?",
           onOk: async () => {
             if (
               this.isSuperAdmin ||
-              this.board.board.created_by === this.user.profile.user.id
+              this.notice.notice.created_by === this.user.profile.user.id
             ) {
               // if (
               //   this.title.length > 0 &&
@@ -122,13 +123,13 @@ export default {
               //   this.content.length > 0 &&
               //   this.content.length < 1000000
               // ) {
-                const test = await api.putBoard(
+                const test = await api.putNotice(
                   this.title,
                   this.content,
                   this.$route.params["board_id"]
                 );
                 this.$router.push({
-                  path: `/board-miracom/${this.$route.params["board_id"]}`
+                  path: `/notice-miracom/${this.$route.params["board_id"]}`
                 });
               // }
             }

@@ -1,6 +1,6 @@
 <template>
   <el-container class="board-container">
-    <el-header>SDS 공지사항</el-header>
+    <el-header>질문게시판</el-header>
     <el-main>
       <el-table
         border
@@ -11,7 +11,7 @@
         <el-table-column prop="id" align="center" width="140px">
         </el-table-column>
 
-        <el-table-column prop="title" label="제목" align="center">
+        <el-table-column prop="title" label="제목" align="left">
           <template slot-scope="scope">
             <span
               style="padding-left:30px;"
@@ -21,17 +21,26 @@
                   (isSuperAdmin || scope.row.created_by == user.profile.user.id)
               "
               >{{ scope.row.title }}
-              <span v-if="scope.row.notice.length && getCommentCount(scope.row.notice)"
-                >[{{ getCommentCount(scope.row.notice) }}]</span>🔒</span>
-            <span style="padding-left:30px;" v-else-if="scope.row.flag == 3"
-              >비공개 글입니다. 🔒</span>
-            <span v-else style="padding-left:30px;"> {{ scope.row.title }}
               <span
                 v-if="
-                  scope.row.notice.length && getCommentCount(scope.row.notice)
+                  scope.row.board.length && getCommentCount(scope.row.board)
                 "
-                >[{{ getCommentCount(scope.row.notice) }}]</span
-              ></span>
+                >[{{ getCommentCount(scope.row.board) }}]</span
+              >
+              🔒</span
+            >
+            <span style="padding-left:30px;" v-else-if="scope.row.flag == 3"
+              >비공개 글입니다. 🔒</span
+            >
+            <span v-else style="padding-left:30px;"
+              >{{ scope.row.title }}
+              <span
+                v-if="
+                  scope.row.board.length && getCommentCount(scope.row.board)
+                "
+                >[{{ getCommentCount(scope.row.board) }}]</span
+              ></span
+            >
           </template>
         </el-table-column>
 
@@ -63,21 +72,21 @@
 
     <el-footer>
       <div class="page-wrapper">
-        <el-button type="primary" @click="write" v-if="isSuperAdmin">공지사항 작성</el-button>
+        <el-button type="primary" @click="write">글쓰기</el-button>
         <div class="serach-wrapper">
           <el-input
             v-model="keyword"
             prefix-icon="el-icon-search"
-            placeholder="제목 / 작성자 검색"
+            placeholder="제목 / 내용 / 이름 검색"
           ></el-input>
-          <el-button type="primary" @click="getNoticeList">검색</el-button>
+          <el-button type="primary" @click="getBoardList">검색</el-button>
         </div>
         <el-pagination
           class="page"
           layout="prev, pager, next"
           :page-size="10"
           :current-page.sync="currentPage"
-          @current-change="getNoticeList"
+          @current-change="getBoardList"
           :total="total"
         >
         </el-pagination>
@@ -91,7 +100,7 @@ import time from "@/utils/time";
 import api from "@oj/api";
 import { mapGetters, mapState } from "vuex";
 export default {
-  name: "Read",
+  name: "ProfessorRead",
   data() {
     return {
       total: 0,
@@ -101,7 +110,7 @@ export default {
     };
   },
   async mounted() {
-    this.getNoticeList();
+    this.getBoardList();
   },
   computed: {
     ...mapState(["user"]),
@@ -117,38 +126,47 @@ export default {
 
       return result;
     },
-    async getNoticeList() {
-      const response = await api.getNoticeList({
+    async getBoardList() {
+      
+      const response = await api.getBoardList({
         limit: 10,
         offset: (this.currentPage - 1) * 10,
         keyword: this.keyword,
-        company: "SDS"
+        company: "Professor"
       });
+      // console.log(response)
+      // const data = Object.entries(response).find(el => el[0] === "data");
       const data = Object.entries(response).find(el => el[0] === "data");
       this.total = data[1]["data"]["total"];
       const result = data[1]["data"]["results"];
       this.data = result;
-      // 210303 게시글 
+      console.log(this.total);
     },
     write() {
       this.$router.push({
-        path: "notice-create"
+        path: "create"
       });
     },
     detail(id, column, cell, event) {
+      // console.log(column.property);
+
       if (
         this.isSuperAdmin ||
         (this.user.profile.user &&
           id.created_by === this.user.profile.user.id) ||
         (id.flag !== 3 && column.property === "title")
       ) {
-        this.$router.push(`/notice/${id.id}`);
+        this.$router.push(`/board/${id.id}`);
       }
+      // console.log(id);
+      // console.log(column);
+      // console.log(cell);
+      // console.log(event);
     },
     getCommentCount(commentList) {
       return commentList.filter(li => li.flag !== 4).length;
     }
-  },
+  }
 };
 </script>
 

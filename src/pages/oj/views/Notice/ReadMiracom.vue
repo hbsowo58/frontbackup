@@ -1,6 +1,6 @@
 <template>
   <el-container class="board-container">
-    <el-header>질문게시판</el-header>
+    <el-header>MIRACOM 공지사항</el-header>
     <el-main>
       <el-table
         border
@@ -8,44 +8,30 @@
         :data="data"
         empty-text="검색한 정보가 없습니다"
       >
-        <!--
-          <el-table-column
-          type="selection"
-          width="80px"
-          >
-          </el-table-column>
-        -->
-        <!-- <el-table-column type="index" align="center" width="140px"> -->
-        <!-- </el-table-column> -->
         <el-table-column prop="id" align="center" width="140px">
         </el-table-column>
 
-        <el-table-column prop="title" label="제목" align="left">
+        <el-table-column prop="title" label="제목" align="center">
           <template slot-scope="scope">
             <span
               style="padding-left:30px;"
-              v-if="scope.row.flag == 3 && user.profile && (isSuperAdmin || scope.row.created_by == user.profile.user.id)"
+              v-if="
+                scope.row.flag == 3 &&
+                  user.profile &&
+                  (isSuperAdmin || scope.row.created_by == user.profile.user.id)
+              "
               >{{ scope.row.title }}
-              <span
-                v-if="
-                  scope.row.board.length && getCommentCount(scope.row.board)
-                "
-                >[{{ getCommentCount(scope.row.board) }}]</span
-              >
-              🔒</span
-            >
+              <span v-if="scope.row.notice.length && getCommentCount(scope.row.notice)"
+                >[{{ getCommentCount(scope.row.notice) }}]</span>🔒</span>
             <span style="padding-left:30px;" v-else-if="scope.row.flag == 3"
-              >비공개 글입니다. 🔒</span
-            >
-            <span v-else style="padding-left:30px;"
-              >{{ scope.row.title }}
+              >비공개 글입니다. 🔒</span>
+            <span v-else style="padding-left:30px;"> {{ scope.row.title }}
               <span
                 v-if="
-                  scope.row.board.length && getCommentCount(scope.row.board)
+                  scope.row.notice.length && getCommentCount(scope.row.notice)
                 "
-                >[{{ getCommentCount(scope.row.board) }}]</span
-              ></span
-            >
+                >[{{ getCommentCount(scope.row.notice) }}]</span
+              ></span>
           </template>
         </el-table-column>
 
@@ -70,34 +56,28 @@
                 scope.row.created_time && toLocalTime(scope.row.created_time)
               }})
             </div>
-            <!--
-              <a href='#' @click="clickMethod(props.row.data)" >{{props.row.maskingData}}</a>
-            -->
           </template>
         </el-table-column>
-        <!-- {{time.utcToLocal}} -->
       </el-table>
     </el-main>
 
-    <!-- <el-button type="danger">선택삭제</el-button> -->
-    <!-- <el-button type="danger">숨기기</el-button> -->
     <el-footer>
       <div class="page-wrapper">
-        <el-button type="primary" @click="write">글쓰기</el-button>
+        <el-button type="primary" @click="write" v-if="isSuperAdmin">공지사항 작성</el-button>
         <div class="serach-wrapper">
           <el-input
             v-model="keyword"
             prefix-icon="el-icon-search"
-            placeholder="제목 / 내용 / 이름 검색"
+            placeholder="제목 / 작성자 검색"
           ></el-input>
-          <el-button type="primary" @click="getBoardList">검색</el-button>
+          <el-button type="primary" @click="getNoticeList">검색</el-button>
         </div>
         <el-pagination
           class="page"
           layout="prev, pager, next"
           :page-size="10"
           :current-page.sync="currentPage"
-          @current-change="getBoardList"
+          @current-change="getNoticeList"
           :total="total"
         >
         </el-pagination>
@@ -121,7 +101,7 @@ export default {
     };
   },
   async mounted() {
-    this.getBoardList();
+    this.getNoticeList();
   },
   computed: {
     ...mapState(["user"]),
@@ -137,41 +117,38 @@ export default {
 
       return result;
     },
-    async getBoardList() {
-      const response = await api.getBoardList({
+    async getNoticeList() {
+      const response = await api.getNoticeList({
         limit: 10,
         offset: (this.currentPage - 1) * 10,
         keyword: this.keyword,
-        company:'MIRACOM'
+        company: "MIRACOM"
       });
-      // console.log(response)
-      // const data = Object.entries(response).find(el => el[0] === "data");
       const data = Object.entries(response).find(el => el[0] === "data");
       this.total = data[1]["data"]["total"];
       const result = data[1]["data"]["results"];
       this.data = result;
+      // 210303 게시글 
     },
     write() {
       this.$router.push({
-        path: "create-miracom"
+        path: "notice-create-miracom"
       });
     },
     detail(id, column, cell, event) {
-      // console.log(column.property);
-
-      if (this.isSuperAdmin || (this.user.profile.user && id.created_by === this.user.profile.user.id )|| (id.flag !== 3 && column.property === "title")) {
-        console.log(id.id);
-        this.$router.push(`/board-miracom/${id.id}`);
+      if (
+        this.isSuperAdmin ||
+        (this.user.profile.user &&
+          id.created_by === this.user.profile.user.id) ||
+        (id.flag !== 3 && column.property === "title")
+      ) {
+        this.$router.push(`/notice-miracom/${id.id}`);
       }
-      // console.log(id);
-      // console.log(column);
-      // console.log(cell);
-      // console.log(event);
     },
     getCommentCount(commentList) {
       return commentList.filter(li => li.flag !== 4).length;
     }
-  }
+  },
 };
 </script>
 

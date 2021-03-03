@@ -37,6 +37,13 @@ import NoticeCreateMiracom from '../views/Notice/CreateMiracom.vue'
 import NoticeDetail from '../views/Notice/Detail.vue'
 import NoticeDetailMiracom from '../views/Notice/DetailMiracom.vue'
 
+import Professor from '../views/board/Professor.vue'
+import ProfessorRead from '../views/board/ProfessorRead.vue'
+import ProfessorCreate from '../views/board/ProfessorCreate.vue'
+import ProfessorDetail from '../views/board/ProfessorDetail.vue'
+
+
+
 import * as Contest from '@oj/views/contest'
 import * as Setting from '@oj/views/setting'
 
@@ -253,6 +260,7 @@ export default [
     meta: {title: 'Java'},
     component: Java
   },
+  // 공지사항
   {
     path: '/notice/:board_id',
     name: 'Detail',
@@ -297,10 +305,35 @@ export default [
     component: NoticeCreate
   },
   {
-    path: '/notice/create-miracom/:board_id?',
+    path: '/notice-create-miracom/:board_id?',
     name: 'Create-miracom',
     meta: {title: 'Create_miracom'},
     component: NoticeCreateMiracom
+  },
+  // 강사전용게시판
+  {
+    path: '/professor/:board_id',
+    name: 'ProfessorDetail',
+    meta: {requiresAuth: true, title: 'ProfessorDetail'},
+    component: ProfessorDetail
+  },
+  {
+    path: '/professor',
+    name: 'Professor',
+    meta: {requiresAuth: true, title: 'Professor'},
+    component: Professor
+  },
+  {
+    path: '/professor/read',
+    name: 'ProfessorRead',
+    meta: {title: 'ProfessorRead'},
+    component: ProfessorRead
+  },
+  {
+    path: '/professor-create/:board_id?',
+    name: 'ProfessorCreate',
+    meta: {title: 'ProfessorCreate'},
+    component: ProfessorCreate
   },
   {
     path: '*',
