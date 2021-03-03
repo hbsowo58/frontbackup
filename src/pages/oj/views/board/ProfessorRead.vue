@@ -72,7 +72,7 @@
 
     <el-footer>
       <div class="page-wrapper">
-        <el-button type="primary" @click="write">글쓰기</el-button>
+        <el-button type="primary" @click="write" v-if="isSuperAdmin">글쓰기</el-button>
         <div class="serach-wrapper">
           <el-input
             v-model="keyword"
@@ -132,7 +132,7 @@ export default {
         limit: 10,
         offset: (this.currentPage - 1) * 10,
         keyword: this.keyword,
-        company: "Professor"
+        company: "PROFESSOR"
       });
       // console.log(response)
       // const data = Object.entries(response).find(el => el[0] === "data");
@@ -144,7 +144,7 @@ export default {
     },
     write() {
       this.$router.push({
-        path: "create"
+        path: "professor-create"
       });
     },
     detail(id, column, cell, event) {
@@ -156,7 +156,7 @@ export default {
           id.created_by === this.user.profile.user.id) ||
         (id.flag !== 3 && column.property === "title")
       ) {
-        this.$router.push(`/board/${id.id}`);
+        this.$router.push(`/professor/${id.id}`);
       }
       // console.log(id);
       // console.log(column);

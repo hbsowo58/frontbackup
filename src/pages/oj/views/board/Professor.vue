@@ -12,9 +12,9 @@ export default {
   name: 'Professor',
   created(){
     // console.log(this.isSuperAdmin)
-    // if(this.isSuperAdmin === false && this.isValidSDS() === false){
-    //   this.$router.push("/");
-    // }
+    if(this.isSuperAdmin === false){
+      this.$router.push("/");
+    }
   },
   beforeMount(){
     // console.log("cehck")
